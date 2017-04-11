@@ -1,12 +1,3 @@
-# adal-angular4
-Angular 4 ADAL Wrapper
-
-mkdir adal-angular4
-
-cd adal-angular4
-
-npm init
-
 # Update NPM
 npm install -g npm@latest
 
@@ -36,11 +27,3 @@ npm install --save-dev karma@latest
 npm install --save-dev jasmine-core@latest
 npm install --save-dev karma-jasmine@latest
 
-#Intitalize eslint
-eslint --init
-
-#Initialize tslint
-
-tslint --init
-
-mkdir src
