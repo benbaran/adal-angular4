@@ -3,6 +3,7 @@ declare module 'adal-angular' {
 }
 
 declare namespace adal {
+
     interface AuthenticationContext {
         REQUEST_TYPE: {
             LOGIN: string,
@@ -10,19 +11,18 @@ declare namespace adal {
             UNKNOWN: string
         };
 
-        callback : any;
+        callback: any;
 
-        _getItem : any;
+        _getItem: any;
 
-        _renewFailed : any;
+        _renewFailed: any;
 
-        CONSTANTS : any;
+        CONSTANTS: any;
     }
 
 }
 
 interface Window {
-    AuthenticationContext : any;
-    callBackMappedToRenewStates : any;
+    AuthenticationContext: any;
+    callBackMappedToRenewStates: any;
 }
-

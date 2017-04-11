@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "target": "es5",
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "outDir": "dist/",
+    "rootDir": "src/",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "adal"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "skipLibCheck": false
+}

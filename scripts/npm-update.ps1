@@ -26,4 +26,5 @@ npm install --save-dev tslint@latest
 npm install --save-dev karma@latest
 npm install --save-dev jasmine-core@latest
 npm install --save-dev karma-jasmine@latest
+npm install --save-dev @types/jasmine@latest
 

@@ -1,22 +1,39 @@
-// grab our gulp packages
-var gulp  = require('gulp'),
-    gutil = require('gulp-util');
+const concat        = require('gulp-concat');
+const del           = require('del');
+const gulp          = require('gulp');
+const merge         = require('merge2');
+const typescript    = require('gulp-typescript');
 
-// create a default task and just log a message
-gulp.task('default', function() {
-  return gutil.log('Gulp is running!')
+
+
+gulp.task('clean', function () {
+    return del('dist/*');
 });
 
-//tslint .\src\*.* --fix
+gulp.task('bundle', ['clean'], function () {
+    var tsResult = gulp.src('src/*.ts')
+        .pipe(typescript({
+            module: "system",
+            target: "es5",
+            noImplicitAny: true,
+            experimentalDecorators: true,
+            outDir: "dist/",
+            rootDir: "src/",
+            sourceMap: true,
+            declaration: true,
+            moduleResolution: "node",
+            removeComments: false,
+            lib: [
+                "es2015",
+                "dom"
+            ],
+            types: [
+                "adal"
+            ]
+        }));
 
-
-// or requiring in ES5 
-var tslint = require("gulp-tslint");
- 
-gulp.task("tslint", () =>
-    gulp.src("src")
-        .pipe(tslint({
-            formatter: "verbose"
-        }))
-        .pipe(tslint.report())
-);
+    return merge([
+        tsResult.dts.pipe(gulp.dest('dist/')),
+        tsResult.js.pipe(gulp.dest('dist/'))
+    ]);
+});
