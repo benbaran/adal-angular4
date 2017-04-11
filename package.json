@@ -2,7 +2,7 @@
   "name": "adal-angular4",
   "version": "0.0.6",
   "description": "ADAL wrapper for Angular4.",
-  "main": "core.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
