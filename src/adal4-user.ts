@@ -1,5 +1,3 @@
-import * as lib from "adal-angular";
-
 export class ADAL4User implements adal.User {
         public userName: string;
         public profile: any;

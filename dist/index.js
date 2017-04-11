@@ -1,13 +1,8 @@
-System.register(["./adal4-user", "./adal4.module", "./adal4-http.module", "./adal4.service", "./adal4-http.service"], function (exports_1, context_1) {
+System.register(["./adal4.module", "./adal4-http.module", "./adal4.service", "./adal4-http.service"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
-            function (adal4_user_1_1) {
-                exports_1({
-                    "ADAL4User": adal4_user_1_1["ADAL4User"]
-                });
-            },
             function (adal4_module_1_1) {
                 exports_1({
                     "ADAL4Module": adal4_module_1_1["ADAL4Module"]

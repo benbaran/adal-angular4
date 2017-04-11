@@ -3,7 +3,6 @@ declare module 'adal-angular' {
 }
 
 declare namespace adal {
-
     interface AuthenticationContext {
         REQUEST_TYPE: {
             LOGIN: string,

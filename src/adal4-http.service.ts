@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 
 import {
-        Headers, Http, RequestMethod, RequestOptions,
-        RequestOptionsArgs, Response, URLSearchParams,
-    } from "@angular/http";
+    Headers, Http, RequestMethod, RequestOptions,
+    RequestOptionsArgs, Response, URLSearchParams,
+} from "@angular/http";
 
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 
 import { ADAL4Service } from "./adal4.service";
 
 @Injectable()
 export class ADAL4HTTPService {
 
-  constructor(private http: Http, private service: ADAL4Service,
+    constructor(private http: Http, private service: ADAL4Service,
     ) { }
 
     public get(url: string, options?: RequestOptionsArgs): Observable<any> {
