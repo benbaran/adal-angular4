@@ -4,8 +4,10 @@ copy .\package.json .\dist
 
 git add .
 
+git commit
+
 npm version patch
 
-git commit
+
 
 npm publish ./dist
