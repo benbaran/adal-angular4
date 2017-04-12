@@ -1,16 +1,23 @@
-const concat        = require('gulp-concat');
-const del           = require('del');
-const gulp          = require('gulp');
-const merge         = require('merge2');
-const typescript    = require('gulp-typescript');
+var bump = require('gulp-bump');
+var concat = require('gulp-concat');
+var del = require('del');
+var filter = require('gulp-filter');
+var fs = require('fs');
+var git = require('gulp-git');
+var gulp = require('gulp');
+var merge = require('merge2');
+var sequence = require('run-sequence');
+var tagversion = require('gulp-tag-version');
+var typescript = require('gulp-typescript');
 
 
-
+/* CLEAN THE DIST FOLDER */
 gulp.task('clean', function () {
     return del('dist/*');
 });
 
-gulp.task('bundle', ['clean'], function () {
+/* CREATE THE BUNDLE */
+gulp.task('bundle', function () {
     var tsResult = gulp.src('src/*.ts')
         .pipe(typescript({
             module: "commonjs",
@@ -36,4 +43,31 @@ gulp.task('bundle', ['clean'], function () {
         tsResult.dts.pipe(gulp.dest('dist/')),
         tsResult.js.pipe(gulp.dest('dist/'))
     ]);
+});
+
+/* ADD AND COMMIT CHANGES WITH NEW VERSION AND TAG */
+gulp.task('bump', function () {
+        gulp.src(['./package.json'])
+        .pipe(bump({type:'patch'}))
+        .pipe(gulp.dest('./'))
+        .pipe(git.commit('bumps package version'))
+        .pipe(filter('package.json'))
+        .pipe(tagversion());
+});
+
+/* CREATE MINIFIED PACKAGE.JSON IN DIST */
+gulp.task('create-package-json', () => {
+
+    const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+
+    // remove scripts
+    delete pkgjson.scripts;
+
+    // remove devDependencies (as there are important for the sourcecode only)
+    delete pkgjson.devDependencies;
+
+    const filepath = './dist/package.json';
+
+    fs.writeFileSync(filepath, JSON.stringify(pkgjson, null, 2), 'utf-8');
+
 });

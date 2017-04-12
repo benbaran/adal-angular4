@@ -3,9 +3,6 @@
   "version": "0.0.13",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benbaran/adal-angular4.git"
@@ -29,23 +26,5 @@
     "adal-angular": "^1.0.14",
     "rxjs": "^5.3.0",
     "zone.js": "^0.8.5"
-  },
-  "devDependencies": {
-    "@types/adal": "^1.0.26",
-    "eslint": "^3.19.0",
-    "eslint-config-google": "^0.7.1",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-header": "^1.8.8",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-sourcemaps": "^2.6.0",
-    "gulp-systemjs-builder": "^0.15.0",
-    "gulp-typescript": "^3.1.6",
-    "gulp-uglify": "^2.1.2",
-    "gulp-util": "^3.0.8",
-    "merge2": "^1.0.3",
-    "run-sequence": "^1.2.2",
-    "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
   }
 }
