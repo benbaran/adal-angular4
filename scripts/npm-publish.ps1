@@ -1,7 +1,5 @@
 gulp bundle
 
-copy .\package.json .\dist
-
 git add .
 
 git commit
