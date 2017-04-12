@@ -13,7 +13,7 @@ gulp.task('clean', function () {
 gulp.task('bundle', ['clean'], function () {
     var tsResult = gulp.src('src/*.ts')
         .pipe(typescript({
-            module: "system",
+            module: "commonjs",
             target: "es5",
             noImplicitAny: true,
             experimentalDecorators: true,
