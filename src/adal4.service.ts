@@ -86,11 +86,11 @@ export class ADAL4Service {
                 if (typeof this.context.callback === "function") {
                     if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
-                        if (requestInfo.parameters[ADAL4Parameters.access_token]) {
+                        if (requestInfo.parameters["access_token"]) {
                             this.context.callback(
                                 this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION),
-                                requestInfo.parameters[ADAL4Parameters.access_token]);
-                        } else if (requestInfo.parameters[ADAL4Parameters.error]) {
+                                requestInfo.parameters["access_token"]);
+                        } else if (requestInfo.parameters["error"]) {
                             this.context.callback(
                                 this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION),
                                 null);
