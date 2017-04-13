@@ -71,13 +71,13 @@ var ADAL4Service = (function () {
                 this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
             }
             if (requestInfo.stateMatch) {
-                if (typeof this.context.callback === "function") {
+                if (typeof this.context.callback === 'function') {
                     if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
-                        if (requestInfo.parameters["access_token"]) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters["access_token"]);
+                        if (requestInfo.parameters['access_token']) {
+                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters['access_token']);
                         }
-                        else if (requestInfo.parameters["error"]) {
+                        else if (requestInfo.parameters['error']) {
                             this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
                             this.context._renewFailed = true;
                         }

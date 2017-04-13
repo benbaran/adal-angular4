@@ -65,9 +65,9 @@ export class ADAL4Service {
     }
 
     public handleWindowCallback(): void {
-        const hash = window.location.hash;
+        let hash = window.location.hash;
         if (this.context.isCallback(hash)) {
-            const requestInfo = this.context.getRequestInfo(hash);
+            let requestInfo = this.context.getRequestInfo(hash);
             this.context.saveTokenFromHash(requestInfo);
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
                 this.updateDataFromCache(this.context.config.loginResource);
@@ -77,17 +77,15 @@ export class ADAL4Service {
             }
 
             if (requestInfo.stateMatch) {
-                if (typeof this.context.callback === "function") {
+                if (typeof this.context.callback === 'function') {
                     if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
-                        if (requestInfo.parameters["access_token"]) {
-                            this.context.callback(
-                                this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION),
-                                requestInfo.parameters["access_token"]);
-                        } else if (requestInfo.parameters["error"]) {
-                            this.context.callback(
-                                this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION),
-                                null);
+                        if (requestInfo.parameters['access_token']) {
+                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
+                                , requestInfo.parameters['access_token']);
+                        }
+                        else if (requestInfo.parameters['error']) {
+                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
                             this.context._renewFailed = true;
                         }
                     }
@@ -130,7 +128,7 @@ export class ADAL4Service {
 
     public getUser(): Observable<adal.User> {
         return Observable.bindCallback((cb: (u: adal.User) => adal.User) => {
-            this.context.getUser(function (error: string, user: adal.User) {
+            this.context.getUser(function(error: string, user: adal.User) {
                 if (error) {
                     this.context.error("Error when getting user", error);
                     cb(null);
@@ -167,10 +165,11 @@ export class ADAL4Service {
 
     private updateDataFromCache(resource: string): void {
         const token = this.context.getCachedToken(resource);
+
         this.authenticated = token !== null && token.length > 0;
-        
+
         const user = this.context.getCachedUser() || { userName: "", profile: undefined };
-        
+
         if (user) {
             this.user.userName = user.userName;
             this.user.profile = user.profile;
