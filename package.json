@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "0.0.37",
+  "version": "0.0.39",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "fs": "0.0.1-security",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.7.0",
+    "gulp-git": "^2.1.0",
     "gulp-typescript": "^3.1.6",
     "gulp-util": "^3.0.8",
     "merge2": "^1.0.3",
