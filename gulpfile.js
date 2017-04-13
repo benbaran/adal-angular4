@@ -1,23 +1,34 @@
-var bump = require('gulp-bump');
-var concat = require('gulp-concat');
-var del = require('del');
-var filter = require('gulp-filter');
-var fs = require('fs');
-var git = require('gulp-git');
+//var concat = require('gulp-concat');
+
+//var filter = require('gulp-filter');
+
+//var git = require('gulp-git');
 var gulp = require('gulp');
 var merge = require('merge2');
-var sequence = require('run-sequence');
-var tagversion = require('gulp-tag-version');
-var typescript = require('gulp-typescript');
+//var sequence = require('run-sequence');
+//var tagversion = require('gulp-tag-version');
+//
 
 
 /* CLEAN THE DIST FOLDER */
+var del = require('del');
 gulp.task('clean', function () {
     return del('dist/*');
 });
 
+/* BUMP VERSION */
+var bump = require('gulp-bump');
+gulp.task('bump', ['clean'], function () {
+    gulp.src(['./package.json'])
+        .pipe(bump({
+            type: 'patch'
+        }))
+        .pipe(gulp.dest('./'))
+});
+
 /* CREATE THE BUNDLE */
-gulp.task('bundle', function () {
+var typescript = require('gulp-typescript');
+gulp.task('bundle', ['bump'], function () {
     var tsResult = gulp.src('src/*.ts')
         .pipe(typescript({
             module: "commonjs",
@@ -45,18 +56,10 @@ gulp.task('bundle', function () {
     ]);
 });
 
-/* ADD AND COMMIT CHANGES WITH NEW VERSION AND TAG */
-gulp.task('bump', function () {
-        gulp.src(['./package.json'])
-        .pipe(bump({type:'patch'}))
-        .pipe(gulp.dest('./'))
-        .pipe(git.commit('bumps package version'))
-        .pipe(filter('package.json'))
-        .pipe(tagversion());
-});
-
 /* CREATE MINIFIED PACKAGE.JSON IN DIST */
-gulp.task('create-package-json', () => {
+var fs = require('fs');
+
+gulp.task('package', ['bundle'], () => {
 
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
@@ -70,4 +73,20 @@ gulp.task('create-package-json', () => {
 
     fs.writeFileSync(filepath, JSON.stringify(pkgjson, null, 2), 'utf-8');
 
+});
+
+gulp.task('commit', ['package'], () => {
+
+    const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+
+    // get version
+    console.log(pkgjson.version);
+
+    gulp.task('add', function () {
+        return gulp.src(['./*', './src/*', './dist/*'])
+            .pipe(
+                git.add()
+                .git.tag('v' + pkgjson.version)
+                .git.commit(pkgjson.version))
+    })
 });

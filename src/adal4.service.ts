@@ -4,21 +4,13 @@ import * as lib from "adal-angular";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { ADAL4Parameters } from "./adal4-parameters.enum";
-import { ADAL4User } from "./adal4-user";
-
 @Injectable()
 export class ADAL4Service {
 
-    // ADAL4User object to hold user info
-    private user: ADAL4User = {
-        authenticated: false,
-        error: "",
-        profile: [],
-        userName: "",
-    };
+    public authenticated: boolean;
 
     private context: adal.AuthenticationContext;
+    private user: adal.User;
 
     /**
      * Initializes the context with a configuration
@@ -54,7 +46,7 @@ export class ADAL4Service {
         return this.context.config;
     }
 
-    public get userInfo(): ADAL4User {
+    public get userInfo(): adal.User{
         return this.user;
     }
 
@@ -136,7 +128,7 @@ export class ADAL4Service {
 
     public getUser(): Observable<adal.User> {
         return Observable.bindCallback((cb: (u: adal.User) => adal.User) => {
-            this.context.getUser(function (error: string, user: adal.User) {
+            this.context.getUser(function(error: string, user: adal.User) {
                 if (error) {
                     this.context.error("Error when getting user", error);
                     cb(null);
@@ -173,7 +165,7 @@ export class ADAL4Service {
 
     private updateDataFromCache(resource: string): void {
         const token = this.context.getCachedToken(resource);
-        this.user.authenticated = token !== null && token.length > 0;
+        this.authenticated = token !== null && token.length > 0;
         const user = this.context.getCachedUser() || { userName: "", profile: undefined };
         if (user) {
             this.user.userName = user.userName;

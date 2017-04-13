@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "0.0.13",
+  "version": "0.0.37",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
   "repository": {
@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/benbaran/adal-angular4#readme",
   "dependencies": {
-    "@angular/common": "^4.0.1",
-    "@angular/compiler": "^4.0.1",
-    "@angular/core": "^4.0.1",
-    "@angular/http": "^4.0.1",
-    "@angular/platform-browser": "^4.0.1",
+    "@angular/common": "^4.0.2",
+    "@angular/core": "^4.0.2",
+    "@angular/http": "^4.0.2",
+    "@angular/platform-browser": "^4.0.2",
+    "@types/adal": "^1.0.26",
     "adal-angular": "^1.0.14",
     "rxjs": "^5.3.0",
     "zone.js": "^0.8.5"

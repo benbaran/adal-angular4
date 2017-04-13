@@ -1,16 +1,16 @@
 /// <reference types="adal" />
 import { Observable } from "rxjs";
-import { ADAL4User } from "./adal4-user";
 export declare class ADAL4Service {
-    private user;
+    authenticated: boolean;
     private context;
+    private user;
     /**
      * Initializes the context with a configuration
      * @param {adal.Config} config - The configuration
      */
     init(config: adal.Config): void;
     readonly config: adal.Config;
-    readonly userInfo: ADAL4User;
+    readonly userInfo: adal.User;
     login(): void;
     loginInProgress(): boolean;
     logOut(): void;

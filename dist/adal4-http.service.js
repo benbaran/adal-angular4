@@ -53,7 +53,7 @@ var ADAL4HTTPService = (function () {
         var resource = this.service.GetResourceForEndpoint(url);
         var authenticatedCall;
         if (resource) {
-            if (this.service.userInfo.authenticated) {
+            if (this.service.authenticated) {
                 authenticatedCall = this.service.acquireToken(resource)
                     .flatMap(function (token) {
                     if (newOptions.headers == null) {

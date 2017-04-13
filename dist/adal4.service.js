@@ -9,16 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lib = require("adal-angular");
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
-var adal4_parameters_enum_1 = require("./adal4-parameters.enum");
 var ADAL4Service = (function () {
     function ADAL4Service() {
-        // ADAL4User object to hold user info
-        this.user = {
-            authenticated: false,
-            error: "",
-            profile: [],
-            userName: "",
-        };
     }
     /**
      * Initializes the context with a configuration
@@ -80,10 +72,10 @@ var ADAL4Service = (function () {
                 if (typeof this.context.callback === "function") {
                     if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
-                        if (requestInfo.parameters[adal4_parameters_enum_1.ADAL4Parameters.access_token]) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters[adal4_parameters_enum_1.ADAL4Parameters.access_token]);
+                        if (requestInfo.parameters["access_token"]) {
+                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters["access_token"]);
                         }
-                        else if (requestInfo.parameters[adal4_parameters_enum_1.ADAL4Parameters.error]) {
+                        else if (requestInfo.parameters["error"]) {
                             this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
                             this.context._renewFailed = true;
                         }
@@ -154,7 +146,7 @@ var ADAL4Service = (function () {
     };
     ADAL4Service.prototype.updateDataFromCache = function (resource) {
         var token = this.context.getCachedToken(resource);
-        this.user.authenticated = token !== null && token.length > 0;
+        this.authenticated = token !== null && token.length > 0;
         var user = this.context.getCachedUser() || { userName: "", profile: undefined };
         if (user) {
             this.user.userName = user.userName;

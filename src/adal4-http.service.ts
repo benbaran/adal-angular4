@@ -62,7 +62,7 @@ export class ADAL4HTTPService {
         let authenticatedCall: Observable<string>;
 
         if (resource) {
-            if (this.service.userInfo.authenticated) {
+            if (this.service.authenticated) {
                 authenticatedCall = this.service.acquireToken(resource)
                     .flatMap((token: string) => {
                         if (newOptions.headers == null) {
