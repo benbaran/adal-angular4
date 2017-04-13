@@ -1,4 +1,5 @@
 
+// adal authentication service
 import * as lib from "adal-angular";
 
 import { Injectable } from "@angular/core";

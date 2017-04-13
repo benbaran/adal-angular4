@@ -1,5 +1,5 @@
 /// <reference types="adal" />
-declare module 'adal-angular' {
+declare module "adal-angular" {
     function inject(config: adal.Config): adal.AuthenticationContext;
 }
 declare namespace adal {

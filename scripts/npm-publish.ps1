@@ -1,13 +1,3 @@
-gulp bundle
-
-npm version patch
-
-copy .\package.json .\dist
-
-git add .
-
-git commit
-
-
+gulp commit
 
 npm publish ./dist

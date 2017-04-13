@@ -1,3 +1,5 @@
+// http service with built in adal authentication
+
 import { Injectable } from "@angular/core";
 
 import {

@@ -2,7 +2,7 @@
 
 //var filter = require('gulp-filter');
 
-//var git = require('gulp-git');
+
 var gulp = require('gulp');
 var merge = require('merge2');
 //var sequence = require('run-sequence');
@@ -75,18 +75,15 @@ gulp.task('package', ['bundle'], () => {
 
 });
 
-gulp.task('commit', ['package'], () => {
+var git = require('gulp-git');
+var push = require('gulp-git-push');
+
+gulp.task('commit', ['package'], function() {
 
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-    // get version
-    console.log(pkgjson.version);
-
-    gulp.task('add', function () {
-        return gulp.src(['./*', './src/*', './dist/*'])
-            .pipe(
-                git.add()
-                .git.tag('v' + pkgjson.version)
-                .git.commit(pkgjson.version))
-    })
-});
+    return gulp.src('./package.json')
+        .pipe(gulp.dest('./'))
+        .pipe(git.commit('Bump version to ' + pkgjson.version + '.'))
+        .pipe(push())
+}); 

@@ -1,46 +1,76 @@
 # adal-angular4
-Angular 4 ADAL Wrapper
+Angular 4 Adal wrapper package. Can be used to authenticate Angular4 applications to Azure Active Directory.
 
-mkdir adal-angular4
+This project is designed to be functional and a demomonstration of how to create, build, and publish NPM modules for Angular4.
 
-cd adal-angular4
+### NOTE: This is very much a work in progress.
 
-npm init
+### Steps I took to create this package:
 
-# Update NPM
-npm install -g npm@latest
+#### Install NODE.js
 
-# Install Angular 4 Prerequisites
+https://nodejs.org
+
+#### Install the latest version of NPM
+```npm install -g npm@latest```
+
+#### Create package directory
+```mkdir adal-angular4```
+
+#### Intialize npm package
+```cd adal-angular4```
+```npm init```
+
+#### Install Angular 4 Prerequisites
+```
 npm install --save rxjs@latest
 npm install --save zone.js@latest
-
-# Install Angular 4
+```
+#### Install Angular 4
+```
 npm install --save @angular/core@latest
 npm install --save @angular/common@latest
-npm install --save @angular/compiler@latest
 npm install --save @angular/platform-browser@latest
 npm install --save @angular/http@latest
-
-# Install ADAL and ADAL Types
+```
+#### Install ADAL and ADAL Types
+```
 npm install --save @types/adal@latest
 npm install --save adal-angular@latest
+```
+##### Install Development Tools
+```
+npm install --save-dev del
+npm install --save-dev eslint
+npm install --save-dev eslint-config-google
+npm install --save-dev fs
+npm install --save-dev gulp
+npm install --save-dev gulp-bump
+npm install --save-dev gulp-git
+npm install --save-dev gulp-git-push
+npm install --save-dev gulp-typescript
+npm install --save-dev gulp-util
+npm install --save-dev merge2
+npm install --save-dev typescript
+npm install --save-dev gulp-typescript
+npm install --save-dev gulp-util
+npm install --save-dev merge2
+npm install --save-dev typescript
+```
 
-# Install Development Tools
-npm install --save-dev typescript@latest
-npm install --save-dev eslint@latest
-npm install --save-dev eslint-config-google@latest
-npm install --save-dev gulp@latest
-npm install --save-dev gulp-util@latest
-npm install --save-dev tslint@latest
-npm install --save-dev karma@latest
-npm install --save-dev jasmine-core@latest
-npm install --save-dev karma-jasmine@latest
+#### Intitalize eslint
+```eslint --init```
 
-#Intitalize eslint
-eslint --init
+#### Initialize tslint
+```tslint --init```
 
-#Initialize tslint
+#### Create a src directory for TypeScript files
+```mkdir src```
 
-tslint --init
+#### Create gulpfile.js (see contents in project)
 
-mkdir src
+#### Build and Commit the Project to Git Repository
+```gulp commit```
+
+#### Publish to NPM 
+```npm publish```

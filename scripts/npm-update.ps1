@@ -8,7 +8,6 @@ npm install --save zone.js@latest
 # Install Angular 4
 npm install --save @angular/core@latest
 npm install --save @angular/common@latest
-#npm install --save @angular/compiler@latest
 npm install --save @angular/platform-browser@latest
 npm install --save @angular/http@latest
 
