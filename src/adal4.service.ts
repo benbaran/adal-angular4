@@ -11,7 +11,8 @@ export class ADAL4Service {
     public authenticated: boolean;
 
     private context: adal.AuthenticationContext;
-    private user: adal.User;
+
+    private user: adal.User = {userName: "" , profile: {}};
 
     /**
      * Initializes the context with a configuration
@@ -47,7 +48,7 @@ export class ADAL4Service {
         return this.context.config;
     }
 
-    public get userInfo(): adal.User{
+    public get userInfo(): adal.User {
         return this.user;
     }
 
@@ -129,7 +130,7 @@ export class ADAL4Service {
 
     public getUser(): Observable<adal.User> {
         return Observable.bindCallback((cb: (u: adal.User) => adal.User) => {
-            this.context.getUser(function(error: string, user: adal.User) {
+            this.context.getUser(function (error: string, user: adal.User) {
                 if (error) {
                     this.context.error("Error when getting user", error);
                     cb(null);
@@ -167,7 +168,9 @@ export class ADAL4Service {
     private updateDataFromCache(resource: string): void {
         const token = this.context.getCachedToken(resource);
         this.authenticated = token !== null && token.length > 0;
+        
         const user = this.context.getCachedUser() || { userName: "", profile: undefined };
+        
         if (user) {
             this.user.userName = user.userName;
             this.user.profile = user.profile;

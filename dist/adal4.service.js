@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var ADAL4Service = (function () {
     function ADAL4Service() {
+        this.user = { userName: "", profile: {} };
     }
     /**
      * Initializes the context with a configuration
