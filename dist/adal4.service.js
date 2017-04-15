@@ -6,91 +6,92 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// adal authentication service
-var lib = require("adal-angular");
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
-var ADAL4Service = (function () {
-    function ADAL4Service() {
-        this.user = { userName: "", profile: {} };
+var adalLib = require("adal-angular");
+var Adal4Service = (function () {
+    function Adal4Service() {
+        this.adal4User = {
+            authenticated: false,
+            username: '',
+            error: '',
+            token: '',
+            profile: {}
+        };
     }
-    /**
-     * Initializes the context with a configuration
-     * @param {adal.Config} config - The configuration
-     */
-    ADAL4Service.prototype.init = function (config) {
-        if (!config) {
-            throw new Error("No configuration specified.");
+    Adal4Service.prototype.init = function (configOptions) {
+        if (!configOptions) {
+            throw new Error('You must set config, when calling init.');
         }
         // redirect and logout_redirect are set to current location by default
-        var hash = window.location.hash;
-        var path = window.location.href;
-        if (hash) {
-            path = path.replace(hash, "");
+        var existingHash = window.location.hash;
+        var pathDefault = window.location.href;
+        if (existingHash) {
+            pathDefault = pathDefault.replace(existingHash, '');
         }
-        config.redirectUri = config.redirectUri || path;
-        config.postLogoutRedirectUri = config.postLogoutRedirectUri || path;
+        configOptions.redirectUri = configOptions.redirectUri || pathDefault;
+        configOptions.postLogoutRedirectUri = configOptions.postLogoutRedirectUri || pathDefault;
         // create instance with given config
-        this.context = lib.inject(config);
-        window.AuthenticationContext = this.context.constructor;
+        this.adalContext = adalLib.inject(configOptions);
+        window.AuthenticationContext = this.adalContext.constructor;
         // loginresource is used to set authenticated status
-        this.updateDataFromCache(this.context.config.loginResource);
+        this.updateDataFromCache(this.adalContext.config.loginResource);
     };
-    Object.defineProperty(ADAL4Service.prototype, "config", {
+    Object.defineProperty(Adal4Service.prototype, "config", {
         get: function () {
-            return this.context.config;
+            return this.adalContext.config;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ADAL4Service.prototype, "userInfo", {
+    Object.defineProperty(Adal4Service.prototype, "userInfo", {
         get: function () {
-            return this.user;
+            return this.adal4User;
         },
         enumerable: true,
         configurable: true
     });
-    ADAL4Service.prototype.login = function () {
-        this.context.login();
+    Adal4Service.prototype.login = function () {
+        this.adalContext.login();
     };
-    ADAL4Service.prototype.loginInProgress = function () {
-        return this.context.loginInProgress();
+    Adal4Service.prototype.loginInProgress = function () {
+        return this.adalContext.loginInProgress();
     };
-    ADAL4Service.prototype.logOut = function () {
-        this.context.logOut();
+    Adal4Service.prototype.logOut = function () {
+        this.adalContext.logOut();
     };
-    ADAL4Service.prototype.handleWindowCallback = function () {
+    Adal4Service.prototype.handleWindowCallback = function () {
         var hash = window.location.hash;
-        if (this.context.isCallback(hash)) {
-            var requestInfo = this.context.getRequestInfo(hash);
-            this.context.saveTokenFromHash(requestInfo);
-            if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
-                this.updateDataFromCache(this.context.config.loginResource);
+        if (this.adalContext.isCallback(hash)) {
+            var requestInfo = this.adalContext.getRequestInfo(hash);
+            this.adalContext.saveTokenFromHash(requestInfo);
+            if (requestInfo.requestType === this.adalContext.REQUEST_TYPE.LOGIN) {
+                this.updateDataFromCache(this.adalContext.config.loginResource);
             }
-            else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
-                this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
+            else if (requestInfo.requestType === this.adalContext.REQUEST_TYPE.RENEW_TOKEN) {
+                this.adalContext.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
             }
             if (requestInfo.stateMatch) {
-                if (typeof this.context.callback === 'function') {
-                    if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
+                if (typeof this.adalContext.callback === 'function') {
+                    if (requestInfo.requestType === this.adalContext.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
                         if (requestInfo.parameters['access_token']) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters['access_token']);
+                            this.adalContext.callback(this.adalContext._getItem(this.adalContext.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters['access_token']);
                         }
                         else if (requestInfo.parameters['error']) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
-                            this.context._renewFailed = true;
+                            this.adalContext.callback(this.adalContext._getItem(this.adalContext.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
+                            this.adalContext._renewFailed = true;
                         }
                     }
                 }
             }
         }
     };
-    ADAL4Service.prototype.getCachedToken = function (resource) {
-        return this.context.getCachedToken(resource);
+    Adal4Service.prototype.getCachedToken = function (resource) {
+        return this.adalContext.getCachedToken(resource);
     };
-    ADAL4Service.prototype.acquireToken = function (resource) {
-        var savedThis = this; // save outer this for inner function
+    Adal4Service.prototype.acquireToken = function (resource) {
+        var _this = this; // save outer this for inner function
         var errorMessage;
         return rxjs_1.Observable.bindCallback(acquireTokenInternal, function (token) {
             if (!token && errorMessage) {
@@ -100,9 +101,9 @@ var ADAL4Service = (function () {
         })();
         function acquireTokenInternal(cb) {
             var s = null;
-            savedThis.context.acquireToken(resource, function (error, tokenOut) {
+            _this.adalContext.acquireToken(resource, function (error, tokenOut) {
                 if (error) {
-                    savedThis.context.error("Error when acquiring token for resource: " + resource, error);
+                    _this.adalContext.error('Error when acquiring token for resource: ' + resource, error);
                     errorMessage = error;
                     cb(null);
                 }
@@ -114,12 +115,12 @@ var ADAL4Service = (function () {
             return s;
         }
     };
-    ADAL4Service.prototype.getUser = function () {
+    Adal4Service.prototype.getUser = function () {
         var _this = this;
         return rxjs_1.Observable.bindCallback(function (cb) {
-            _this.context.getUser(function (error, user) {
+            _this.adalContext.getUser(function (error, user) {
                 if (error) {
-                    this.context.error("Error when getting user", error);
+                    this.adalContext.error('Error when getting user', error);
                     cb(null);
                 }
                 else {
@@ -128,40 +129,45 @@ var ADAL4Service = (function () {
             });
         })();
     };
-    ADAL4Service.prototype.clearCache = function () {
-        this.context.clearCache();
+    Adal4Service.prototype.clearCache = function () {
+        this.adalContext.clearCache();
     };
-    ADAL4Service.prototype.clearCacheForResource = function (resource) {
-        this.context.clearCacheForResource(resource);
+    Adal4Service.prototype.clearCacheForResource = function (resource) {
+        this.adalContext.clearCacheForResource(resource);
     };
-    ADAL4Service.prototype.info = function (message) {
-        this.context.info(message);
+    Adal4Service.prototype.info = function (message) {
+        this.adalContext.info(message);
     };
-    ADAL4Service.prototype.verbose = function (message) {
-        this.context.verbose(message);
+    Adal4Service.prototype.verbose = function (message) {
+        this.adalContext.verbose(message);
     };
-    ADAL4Service.prototype.GetResourceForEndpoint = function (url) {
-        return this.context.getResourceForEndpoint(url);
+    Adal4Service.prototype.GetResourceForEndpoint = function (url) {
+        return this.adalContext.getResourceForEndpoint(url);
     };
-    ADAL4Service.prototype.refreshDataFromCache = function () {
-        this.updateDataFromCache(this.context.config.loginResource);
+    Adal4Service.prototype.refreshDataFromCache = function () {
+        this.updateDataFromCache(this.adalContext.config.loginResource);
     };
-    ADAL4Service.prototype.updateDataFromCache = function (resource) {
-        var token = this.context.getCachedToken(resource);
-        this.authenticated = token !== null && token.length > 0;
-        var user = this.context.getCachedUser() || { userName: "", profile: undefined };
+    Adal4Service.prototype.updateDataFromCache = function (resource) {
+        var token = this.adalContext.getCachedToken(resource);
+        this.adal4User.authenticated = token !== null && token.length > 0;
+        var user = this.adalContext.getCachedUser() || { userName: '', profile: undefined };
         if (user) {
-            this.user.userName = user.userName;
-            this.user.profile = user.profile;
+            this.adal4User.username = user.userName;
+            this.adal4User.profile = user.profile;
+            this.adal4User.token = token;
+            this.adal4User.error = this.adalContext.getLoginError();
         }
         else {
-            this.user.userName = "";
-            this.user.profile = {};
+            this.adal4User.username = '';
+            this.adal4User.profile = {};
+            this.adal4User.token = '';
+            this.adal4User.error = '';
         }
     };
-    return ADAL4Service;
+    ;
+    return Adal4Service;
 }());
-ADAL4Service = __decorate([
+Adal4Service = __decorate([
     core_1.Injectable()
-], ADAL4Service);
-exports.ADAL4Service = ADAL4Service;
+], Adal4Service);
+exports.Adal4Service = Adal4Service;

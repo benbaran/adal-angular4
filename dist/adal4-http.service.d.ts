@@ -1,10 +1,10 @@
-import { Http, RequestOptionsArgs } from "@angular/http";
-import { Observable } from "rxjs";
-import { ADAL4Service } from "./adal4.service";
-export declare class ADAL4HTTPService {
+import { Http, RequestOptionsArgs } from '@angular/http';
+import { Observable } from 'rxjs';
+import { Adal4Service } from './adal4.service';
+export declare class Adal4HTTPService {
     private http;
     private service;
-    constructor(http: Http, service: ADAL4Service);
+    constructor(http: Http, service: Adal4Service);
     get(url: string, options?: RequestOptionsArgs): Observable<any>;
     post(url: string, body: any, options?: RequestOptionsArgs): Observable<any>;
     delete(url: string, options?: RequestOptionsArgs): Observable<any>;

@@ -45,8 +45,7 @@ gulp.task('bundle', ['bump'], function () {
                 "es2015",
                 "dom"
             ],
-            types: [
-                "adal"
+            types: ["jasmine"
             ]
         }));
 

@@ -21,6 +21,12 @@
       "node_modules",
       "dist"
     ],
-    "skipLibCheck": false 
+    "typeRoots": [
+      "./src"
+    ],
+    "skipLibCheck": false,
+     "globalDependencies": {
+        "adal": "file:./src/adal.d.ts"
+    }
   }
 }
