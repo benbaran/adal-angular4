@@ -1,11 +1,20 @@
-# adal-angular4
-Angular 4 Adal wrapper package. Can be used to authenticate Angular4 applications to Azure Active Directory.
+### adal-angular4
 
-This project is designed to be functional and a demomonstration of how to create, build, and publish NPM modules for Angular4.
+---
 
-### NOTE: This is very much a work in progress.
+Angular 4 Adal wrapper package. Can be used to authenticate Angular 4 applications to Azure Active Directory. This project is designed to be a functional demomonstration of how to create, build, and publish NPM modules for Angular4.
 
-### Steps I took to create this package:
+Working example at https://github.com/benbaran/adal-angular4-example.
+
+---
+
+### Change Log
+
+v0.0.74 - Authentication now works as set up in the example project.
+
+---
+
+### Steps I took to create this package (out of date, will be updated soon):
 
 #### Install NODE.js
 
