@@ -5,9 +5,16 @@ import { Adal4Service } from './adal4.service';
 
 @Injectable()
 export class Adal4HTTPService {
-  constructor(private http: Http
-    , private service: Adal4Service
+
+  static factory(http: Http, service: Adal4Service) {
+    new Adal4HTTPService(http, service);
+  }
+
+  constructor(
+    private http: Http,
+    private service: Adal4Service
   ) { }
+
 
   get(url: string, options?: RequestOptionsArgs): Observable<any> {
     let options1 = new RequestOptions({ method: RequestMethod.Get });
