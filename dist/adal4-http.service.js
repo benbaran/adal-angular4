@@ -9,11 +9,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var rxjs_1 = require("rxjs");
-var Adal4HTTPService = (function () {
+var Adal4HTTPService = Adal4HTTPService_1 = (function () {
     function Adal4HTTPService(http, service) {
         this.http = http;
         this.service = service;
     }
+    Adal4HTTPService.factory = function (http, service) {
+        new Adal4HTTPService_1(http, service);
+    };
     Adal4HTTPService.prototype.get = function (url, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Get });
         options1 = options1.merge(options);
@@ -92,7 +95,8 @@ var Adal4HTTPService = (function () {
     };
     return Adal4HTTPService;
 }());
-Adal4HTTPService = __decorate([
+Adal4HTTPService = Adal4HTTPService_1 = __decorate([
     core_1.Injectable()
 ], Adal4HTTPService);
 exports.Adal4HTTPService = Adal4HTTPService;
+var Adal4HTTPService_1;
