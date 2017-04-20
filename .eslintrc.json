@@ -3,6 +3,5 @@
     "plugins": [
         "standard",
         "promise"
-    ],
-    "esversion": 6
+    ]
 }

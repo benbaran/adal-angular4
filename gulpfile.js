@@ -44,15 +44,12 @@ gulp.task('bundle', ['bump'], function () {
     ]);
 });
 
-/* CREATE MINIFIED PACKAGE.JSON IN DIST */
 gulp.task('package', ['bundle'], () => {
 
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-    // remove scripts
     delete pkgjson.scripts;
 
-    // remove devDependencies (as there are important for the sourcecode only)
     delete pkgjson.devDependencies;
 
     const filepath = './dist/package.json';
@@ -69,7 +66,7 @@ gulp.task('git-add', ['package'], function (cb) {
     });
 });
 
-// Commit
+
 gulp.task('git-commit', ['git-add'], function (cb) {
 
     var package = require('./package.json');
