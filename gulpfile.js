@@ -90,7 +90,7 @@ gulp.task('git-push', ['git-commit'], function (cb) {
     });
 });
 
-gulp.task('publish', ['git-push'], function () {
+gulp.task('publish', ['git-push'], function (cb) {
 
     exec('npm publish ./dist', function (err, stdout, stderr) {
         console.log(stdout);
