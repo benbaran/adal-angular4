@@ -20,16 +20,21 @@ ___
 
 [https://www.npmjs.com/](https://www.npmjs.com/)
 
-### Install NODE.js
+### Install Node.js
 
 [https://nodejs.org](https://nodejs.org)
 
-### Install the Latest Version of NPM and Global Packages
+### Install the Latest Version of NPM
 
 ```bash
 
 npm install -g npm@latest
 
+### Install Needed Global Packages
+
+npm install -g gulp
+npm install -g tslint
+npm install -g typescript
 npm install -g tslint
 
 ```
@@ -103,8 +108,6 @@ npm install --save-dev @types/jasmine
 
 ```bash
 
-npm install --g eslint
-
 eslint --init
 
 ```
@@ -112,10 +115,6 @@ eslint --init
 ### Initialize TSLint
 
 ```bash
-
-npm install -g typescript
-
-npm install -g tslint
 
 tslint --init
 
