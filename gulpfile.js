@@ -46,8 +46,8 @@ gulp.task('bundle', ['bump'], function () {
 
 gulp.task('copy', ['bundle'], () => {
 
-    gulp.src('./src/adal-angular.d.ts')
-        .pipe(gulp.dest('./dist/adal-angular.d.ts'));
+    gulp.src('src/adal-angular.d.ts')
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('package', ['copy'], () => {
