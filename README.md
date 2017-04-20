@@ -9,7 +9,7 @@ Working example at https://github.com/benbaran/adal-angular4-example.
 ---
 
 ### Change Log
-
+v0.0.80 - Added JSDoc to all files.
 v0.0.74 - Authentication now works as set up in the example project.
 
 ---

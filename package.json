@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "0.0.82",
+  "version": "0.0.83",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
   "scripts": {
@@ -35,6 +35,9 @@
     "codelyzer": "^2.1.1",
     "del": "^2.2.2",
     "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "fs": "0.0.1-security",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.7.0",
