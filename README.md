@@ -65,6 +65,8 @@ npm install --save-dev del
 npm install --save-dev merge2
 npm install --save-dev typescript
 npm install --save-dev gulp-typescript
+npm install --save-dev @types/jasmine
+
 
 
 npm install --save-dev del
