@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "0.0.77",
+  "version": "0.0.78",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
   "scripts": {
