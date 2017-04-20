@@ -46,7 +46,7 @@ gulp.task('bundle', ['bump'], function () {
 
 gulp.task('copy', ['bundle'], () => {
 
-    gulp.src('src/adal-angular.d.ts')
+    gulp.src(['src/adal-angular.d.ts', 'README.md', 'LICENSE'])
         .pipe(gulp.dest('dist/'));
 });
 
