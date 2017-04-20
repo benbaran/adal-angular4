@@ -1,3 +1,9 @@
+/**
+ * 
+ * 
+ * @export
+ * @class Adal4User
+ */
 export class Adal4User {
     authenticated: boolean;
     username: string;

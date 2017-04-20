@@ -1,5 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ *
+ *
+ * @export
+ * @class Adal4User
+ */
 var Adal4User = (function () {
     function Adal4User() {
     }

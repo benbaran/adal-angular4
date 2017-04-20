@@ -13,6 +13,11 @@ declare module 'adal' {
 
 declare namespace adal {
 
+    /**
+     * 
+     * 
+     * @interface Config
+     */
     interface Config {
         tenant?: string;
         clientId: string;
@@ -33,11 +38,21 @@ declare namespace adal {
         navigateToLoginRequestUrl?: boolean;
     }
 
+    /**
+     * 
+     * 
+     * @interface User
+     */
     interface User {
         userName: string;
         profile: any;
     }
 
+    /**
+     * 
+     * 
+     * @interface RequestInfo
+     */
     interface RequestInfo {
         valid: boolean;
         parameters: any;
@@ -46,11 +61,21 @@ declare namespace adal {
         requestType: string;
     }
 
+    /**
+     * 
+     * 
+     * @interface Logging
+     */
     interface Logging {
         log: (message: string) => void;
         level: LoggingLevel;
     }
 
+    /**
+     * 
+     * 
+     * @enum {number}
+     */
     enum LoggingLevel {
         ERROR = 0,
         WARNING = 1,
@@ -58,10 +83,20 @@ declare namespace adal {
         VERBOSE = 3
     }
 
+    /**
+     * 
+     * 
+     * @interface AuthenticationContextStatic
+     */
     interface AuthenticationContextStatic {
         new (config: Config): AuthenticationContext;
     }
 
+    /**
+     * 
+     * 
+     * @interface AuthenticationContext
+     */
     interface AuthenticationContext {
 
         // Additional items for Angular 4
@@ -79,7 +114,7 @@ declare namespace adal {
         _getItem: any;
 
         _renewFailed: any;
-        
+
         // Original ADAL Types
         instance: string;
         config: Config;
@@ -192,9 +227,11 @@ declare namespace adal {
 
 }
 
-
-
-
+/**
+ * 
+ * 
+ * @interface Window
+ */
 interface Window {
     AuthenticationContext: any;
     callBackMappedToRenewStates: any;

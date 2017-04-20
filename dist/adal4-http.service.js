@@ -9,44 +9,133 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var rxjs_1 = require("rxjs");
+/**
+ *
+ *
+ * @export
+ * @class Adal4HTTPService
+ */
 var Adal4HTTPService = Adal4HTTPService_1 = (function () {
+    /**
+     * Creates an instance of Adal4HTTPService.
+     * @param {Http} http
+     * @param {Adal4Service} service
+     *
+     * @memberOf Adal4HTTPService
+     */
     function Adal4HTTPService(http, service) {
         this.http = http;
         this.service = service;
     }
+    /**
+     *
+     *
+     * @static
+     * @param {Http} http
+     * @param {Adal4Service} service
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.factory = function (http, service) {
         new Adal4HTTPService_1(http, service);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.get = function (url, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Get });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {*} body
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.post = function (url, body, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Post, body: body });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.delete = function (url, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Delete });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {*} body
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.patch = function (url, body, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Patch, body: body });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {*} body
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.put = function (url, body, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Put, body: body });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @param {RequestOptionsArgs} [options]
+     * @returns {Observable<any>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.head = function (url, options) {
         var options1 = new http_1.RequestOptions({ method: http_1.RequestMethod.Put });
         options1 = options1.merge(options);
         return this.sendRequest(url, options1);
     };
+    /**
+     *
+     *
+     * @private
+     * @param {string} url
+     * @param {RequestOptionsArgs} options
+     * @returns {Observable<string>}
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.sendRequest = function (url, options) {
         var _this = this;
         //make a copy
@@ -76,6 +165,15 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
         }
         return authenticatedCall;
     };
+    /**
+     *
+     *
+     * @private
+     * @param {Response} res
+     * @returns
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.extractData = function (res) {
         if (res.status < 200 || res.status >= 300) {
             throw new Error('Bad response status: ' + res.status);
@@ -87,6 +185,15 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
         }
         return body || {};
     };
+    /**
+     *
+     *
+     * @private
+     * @param {*} error
+     * @returns
+     *
+     * @memberOf Adal4HTTPService
+     */
     Adal4HTTPService.prototype.handleError = function (error) {
         // In a real world app, we might send the error to remote logging infrastructure
         var errMsg = error.message || 'Server error';

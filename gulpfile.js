@@ -1,33 +1,23 @@
-//var concat = require('gulp-concat');
+var bump = require('gulp-bump'),
+    del = require('del'),
+    exec = require('child_process').exec,
+    gulp = require('gulp'),
+    merge = require('merge2'),
+    typescript = require('gulp-typescript'),
+    fs = require('fs');
 
-//var filter = require('gulp-filter');
-
-
-var gulp = require('gulp');
-var merge = require('merge2');
-//var sequence = require('run-sequence');
-//var tagversion = require('gulp-tag-version');
-//
-
-
-/* CLEAN THE DIST FOLDER */
-var del = require('del');
 gulp.task('clean', function () {
-    return del('dist/*');
+    del(['dist/*']);
 });
 
-/* BUMP VERSION */
-var bump = require('gulp-bump');
 gulp.task('bump', ['clean'], function () {
-    gulp.src(['./package.json'])
+    gulp.src('./package.json')
         .pipe(bump({
             type: 'patch'
         }))
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./'));
 });
 
-/* CREATE THE BUNDLE */
-var typescript = require('gulp-typescript');
 gulp.task('bundle', ['bump'], function () {
     var tsResult = gulp.src('src/*.ts')
         .pipe(typescript({
@@ -45,8 +35,7 @@ gulp.task('bundle', ['bump'], function () {
                 "es2015",
                 "dom"
             ],
-            types: ["jasmine"
-            ]
+            types: ["jasmine"]
         }));
 
     return merge([
@@ -56,8 +45,6 @@ gulp.task('bundle', ['bump'], function () {
 });
 
 /* CREATE MINIFIED PACKAGE.JSON IN DIST */
-var fs = require('fs');
-
 gulp.task('package', ['bundle'], () => {
 
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
@@ -74,15 +61,35 @@ gulp.task('package', ['bundle'], () => {
 
 });
 
-var git = require('gulp-git');
-var push = require('gulp-git-push');
+gulp.task('git-add', ['package'], function (cb) {
+    exec('git add -A', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
 
-gulp.task('commit', ['package'], function() {
+// Commit
+gulp.task('git-commit', ['git-add'], function (cb) {
 
-    const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    var package = require('./package.json');
 
-    return gulp.src('./package.json')
-        .pipe(gulp.dest('./'))
-        .pipe(git.commit('Bump version to ' + pkgjson.version + '.'))
-        .pipe(push())
-}); 
+    exec('git commit -m "Version ' + package.version + ' release."', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('git-push', ['git-commit'], function (cb) {
+
+    exec('git push', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('publish', ['git-push'], function () {
+
+});

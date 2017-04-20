@@ -9,8 +9,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var adalLib = require("adal-angular");
+/**
+ *
+ *
+ * @export
+ * @class Adal4Service
+ */
 var Adal4Service = (function () {
+    /**
+     * Creates an instance of Adal4Service.
+     *
+     * @memberOf Adal4Service
+     */
     function Adal4Service() {
+        /**
+         *
+         *
+         * @private
+         * @type {Adal4User}
+         * @memberOf Adal4Service
+         */
         this.adal4User = {
             authenticated: false,
             username: '',
@@ -19,6 +37,13 @@ var Adal4Service = (function () {
             profile: {}
         };
     }
+    /**
+     *
+     *
+     * @param {adal.Config} configOptions
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.init = function (configOptions) {
         if (!configOptions) {
             throw new Error('You must set config, when calling init.');
@@ -38,6 +63,13 @@ var Adal4Service = (function () {
         this.updateDataFromCache(this.adalContext.config.loginResource);
     };
     Object.defineProperty(Adal4Service.prototype, "config", {
+        /**
+         *
+         *
+         * @readonly
+         * @type {adal.Config}
+         * @memberOf Adal4Service
+         */
         get: function () {
             return this.adalContext.config;
         },
@@ -45,21 +77,53 @@ var Adal4Service = (function () {
         configurable: true
     });
     Object.defineProperty(Adal4Service.prototype, "userInfo", {
+        /**
+         *
+         *
+         * @readonly
+         * @type {Adal4User}
+         * @memberOf Adal4Service
+         */
         get: function () {
             return this.adal4User;
         },
         enumerable: true,
         configurable: true
     });
+    /**
+     *
+     *
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.login = function () {
         this.adalContext.login();
     };
+    /**
+     *
+     *
+     * @returns {boolean}
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.loginInProgress = function () {
         return this.adalContext.loginInProgress();
     };
+    /**
+     *
+     *
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.logOut = function () {
         this.adalContext.logOut();
     };
+    /**
+     *
+     *
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.handleWindowCallback = function () {
         var hash = window.location.hash;
         if (this.adalContext.isCallback(hash)) {
@@ -87,9 +151,25 @@ var Adal4Service = (function () {
             }
         }
     };
+    /**
+     *
+     *
+     * @param {string} resource
+     * @returns {string}
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.getCachedToken = function (resource) {
         return this.adalContext.getCachedToken(resource);
     };
+    /**
+     *
+     *
+     * @param {string} resource
+     * @returns
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.acquireToken = function (resource) {
         var _this = this; // save outer this for inner function
         var errorMessage;
@@ -115,6 +195,13 @@ var Adal4Service = (function () {
             return s;
         }
     };
+    /**
+     *
+     *
+     * @returns {Observable<adal.User>}
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.getUser = function () {
         var _this = this;
         return rxjs_1.Observable.bindCallback(function (cb) {
@@ -129,24 +216,73 @@ var Adal4Service = (function () {
             });
         })();
     };
+    /**
+     *
+     *
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.clearCache = function () {
         this.adalContext.clearCache();
     };
+    /**
+     *
+     *
+     * @param {string} resource
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.clearCacheForResource = function (resource) {
         this.adalContext.clearCacheForResource(resource);
     };
+    /**
+     *
+     *
+     * @param {string} message
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.info = function (message) {
         this.adalContext.info(message);
     };
+    /**
+     *
+     *
+     * @param {string} message
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.verbose = function (message) {
         this.adalContext.verbose(message);
     };
+    /**
+     *
+     *
+     * @param {string} url
+     * @returns {string}
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.GetResourceForEndpoint = function (url) {
         return this.adalContext.getResourceForEndpoint(url);
     };
+    /**
+     *
+     *
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.refreshDataFromCache = function () {
         this.updateDataFromCache(this.adalContext.config.loginResource);
     };
+    /**
+     *
+     *
+     * @private
+     * @param {string} resource
+     *
+     * @memberOf Adal4Service
+     */
     Adal4Service.prototype.updateDataFromCache = function (resource) {
         var token = this.adalContext.getCachedToken(resource);
         this.adal4User.authenticated = token !== null && token.length > 0;
