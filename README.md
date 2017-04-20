@@ -30,7 +30,11 @@ ___
 
 npm install -g npm@latest
 
+```
+
 ### Install Needed Global Packages
+
+```bash
 
 npm install -g gulp
 npm install -g tslint
@@ -59,8 +63,12 @@ npm init
 
 ### Make the First Commit
 
+```bash
+
 git add -A
 git commit -m 'Initial commit'
+
+```
 
 ### Install Angular 4 Prerequisites
 
