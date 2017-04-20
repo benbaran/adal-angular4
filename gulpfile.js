@@ -44,7 +44,13 @@ gulp.task('bundle', ['bump'], function () {
     ]);
 });
 
-gulp.task('package', ['bundle'], () => {
+gulp.task('copy', ['bundle'], () => {
+
+    gulp.src('./src/adal-angular.d.ts')
+        .pipe(gulp.dest('./dist/adal-angular.d.ts'));
+});
+
+gulp.task('package', ['copy'], () => {
 
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
