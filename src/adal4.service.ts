@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Adal4User } from './adal4-user';
 import * as adalLib from 'adal-angular';
+import { adal } from 'adal-angular';
 import User = adal.User;
 
 /**
