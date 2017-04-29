@@ -37,7 +37,7 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
      * @memberOf Adal4HTTPService
      */
     Adal4HTTPService.factory = function (http, service) {
-        new Adal4HTTPService_1(http, service);
+        return new Adal4HTTPService_1(http, service);
     };
     /**
      *

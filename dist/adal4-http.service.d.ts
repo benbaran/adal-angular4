@@ -19,7 +19,7 @@ export declare class Adal4HTTPService {
      *
      * @memberOf Adal4HTTPService
      */
-    static factory(http: Http, service: Adal4Service): void;
+    static factory(http: Http, service: Adal4Service): Adal4HTTPService;
     /**
      * Creates an instance of Adal4HTTPService.
      * @param {Http} http

@@ -22,7 +22,7 @@ export class Adal4HTTPService {
    * @memberOf Adal4HTTPService
    */
   static factory(http: Http, service: Adal4Service) {
-    new Adal4HTTPService(http, service);
+    return new Adal4HTTPService(http, service);
   }
 
   /**
