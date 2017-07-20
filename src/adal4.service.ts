@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { Adal4User } from './adal4-user';
 import * as adalLib from 'adal-angular';
-import { adal } from 'adal-angular';
+
 import User = adal.User;
 
 /**
- * 
- * 
+ *
+ *
  * @export
  * @class Adal4Service
  */
@@ -15,8 +15,8 @@ import User = adal.User;
 export class Adal4Service {
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
    * @type {adal.AuthenticationContext}
    * @memberOf Adal4Service
@@ -24,8 +24,8 @@ export class Adal4Service {
   private adalContext: adal.AuthenticationContext;
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
    * @type {Adal4User}
    * @memberOf Adal4Service
@@ -40,16 +40,16 @@ export class Adal4Service {
 
   /**
    * Creates an instance of Adal4Service.
-   * 
+   *
    * @memberOf Adal4Service
    */
   constructor() { }
 
   /**
-   * 
-   * 
-   * @param {adal.Config} configOptions 
-   * 
+   *
+   *
+   * @param {adal.Config} configOptions
+   *
    * @memberOf Adal4Service
    */
   public init(configOptions: adal.Config) {
@@ -58,7 +58,7 @@ export class Adal4Service {
     }
 
     // redirect and logout_redirect are set to current location by default
-    let existingHash = window.location.hash;
+    const existingHash = window.location.hash;
 
     let pathDefault = window.location.href;
     if (existingHash) {
@@ -78,8 +78,8 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @readonly
    * @type {adal.Config}
    * @memberOf Adal4Service
@@ -89,8 +89,8 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @readonly
    * @type {Adal4User}
    * @memberOf Adal4Service
@@ -100,9 +100,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @memberOf Adal4Service
    */
   public login(): void {
@@ -110,9 +110,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @returns {boolean} 
+   *
+   *
+   * @returns {boolean}
    *
    * @memberOf Adal4Service
    */
@@ -137,9 +137,9 @@ export class Adal4Service {
    * @memberOf Adal4Service
    */
   public handleWindowCallback(): void {
-    let hash = window.location.hash;
+    const hash = window.location.hash;
     if (this.adalContext.isCallback(hash)) {
-      let requestInfo = this.adalContext.getRequestInfo(hash);
+      const requestInfo = this.adalContext.getRequestInfo(hash);
       this.adalContext.saveTokenFromHash(requestInfo);
       if (requestInfo.requestType === this.adalContext.REQUEST_TYPE.LOGIN) {
         this.updateDataFromCache(this.adalContext.config.loginResource);
@@ -221,7 +221,7 @@ export class Adal4Service {
    *
    * @memberOf Adal4Service
    */
-  public getUser(): Observable<adal.User> {
+  public getUser(): Observable<any> {
     return Observable.bindCallback((cb: (u: adal.User) => User) => {
       this.adalContext.getUser(function (error: string, user: adal.User) {
         if (error) {

@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { Adal4User } from './adal4-user';
-import { adal } from 'adal-angular';
 /**
  *
  *
@@ -108,7 +107,7 @@ export declare class Adal4Service {
      *
      * @memberOf Adal4Service
      */
-    getUser(): Observable<adal.User>;
+    getUser(): Observable<any>;
     /**
      *
      *
