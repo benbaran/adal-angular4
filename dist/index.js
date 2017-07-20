@@ -7,3 +7,5 @@ var adal4_service_1 = require("./adal4.service");
 exports.Adal4Service = adal4_service_1.Adal4Service;
 var adal4_http_service_1 = require("./adal4-http.service");
 exports.Adal4HTTPService = adal4_http_service_1.Adal4HTTPService;
+var adal4_interceptor_1 = require("./adal4-interceptor");
+exports.Adal4Interceptor = adal4_interceptor_1.Adal4Interceptor;

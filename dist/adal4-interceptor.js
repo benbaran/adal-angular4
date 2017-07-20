@@ -7,11 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var TokenInterceptor = (function () {
-    function TokenInterceptor(adal4Service) {
+var Adal4Interceptor = (function () {
+    function Adal4Interceptor(adal4Service) {
         this.adal4Service = adal4Service;
     }
-    TokenInterceptor.prototype.intercept = function (request, next) {
+    Adal4Interceptor.prototype.intercept = function (request, next) {
         request = request.clone({
             setHeaders: {
                 Authorization: "Bearer " + this.adal4Service.userInfo.token
@@ -19,9 +19,9 @@ var TokenInterceptor = (function () {
         });
         return next.handle(request);
     };
-    TokenInterceptor = __decorate([
+    Adal4Interceptor = __decorate([
         core_1.Injectable()
-    ], TokenInterceptor);
-    return TokenInterceptor;
+    ], Adal4Interceptor);
+    return Adal4Interceptor;
 }());
-exports.TokenInterceptor = TokenInterceptor;
+exports.Adal4Interceptor = Adal4Interceptor;

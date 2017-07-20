@@ -8,7 +8,7 @@ import {
 import { Adal4Service } from './adal4.service';
 import { Observable } from 'rxjs/Observable';
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class Adal4Interceptor implements HttpInterceptor {
     constructor(public adal4Service: Adal4Service) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
