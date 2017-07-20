@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { Adal4User } from './adal4-user';
+import { adal } from 'adal-angular';
 /**
  *
  *

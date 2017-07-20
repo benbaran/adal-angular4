@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-    HttpRequest,
-    HttpHandler,
-    HttpEvent,
-    HttpInterceptor
-} from '@angular/common/http';
-import { Adal4Service } from './adal4.service';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+
+import { Adal4Service } from './adal4.service';
+
 @Injectable()
 export class Adal4Interceptor implements HttpInterceptor {
     constructor(public adal4Service: Adal4Service) { }
