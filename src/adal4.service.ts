@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { Adal4User } from './adal4-user';
 import * as adalLib from 'adal-angular';
 

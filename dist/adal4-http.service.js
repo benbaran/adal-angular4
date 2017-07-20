@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var rxjs_1 = require("rxjs");
+var Observable_1 = require("rxjs/Observable");
 /**
  *
  *
@@ -158,7 +158,7 @@ var Adal4HTTPService = (function () {
                 });
             }
             else {
-                authenticatedCall = rxjs_1.Observable.throw(new Error('User Not Authenticated.'));
+                authenticatedCall = Observable_1.Observable.throw(new Error('User Not Authenticated.'));
             }
         }
         else {
@@ -199,7 +199,7 @@ var Adal4HTTPService = (function () {
         // In a real world app, we might send the error to remote logging infrastructure
         var errMsg = error.message || 'Server error';
         console.error(JSON.stringify(error)); // log to console instead
-        return rxjs_1.Observable.throw(error);
+        return Observable_1.Observable.throw(error);
     };
     Adal4HTTPService = Adal4HTTPService_1 = __decorate([
         core_1.Injectable()

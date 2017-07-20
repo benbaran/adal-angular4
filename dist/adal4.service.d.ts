@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { Adal4User } from './adal4-user';
 /**
  *
@@ -99,7 +99,7 @@ export declare class Adal4Service {
      *
      * @memberOf Adal4Service
      */
-    acquireToken(resource: string): Observable<string>;
+    acquireToken(resource: string): any;
     /**
      *
      *
