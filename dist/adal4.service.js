@@ -301,9 +301,9 @@ var Adal4Service = (function () {
         }
     };
     ;
+    Adal4Service = __decorate([
+        core_1.Injectable()
+    ], Adal4Service);
     return Adal4Service;
 }());
-Adal4Service = __decorate([
-    core_1.Injectable()
-], Adal4Service);
 exports.Adal4Service = Adal4Service;

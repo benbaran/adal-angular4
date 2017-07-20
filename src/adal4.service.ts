@@ -113,7 +113,7 @@ export class Adal4Service {
    * 
    * 
    * @returns {boolean} 
-   * 
+   *
    * @memberOf Adal4Service
    */
   public loginInProgress(): boolean {
@@ -121,9 +121,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @memberOf Adal4Service
    */
   public logOut(): void {
@@ -131,9 +131,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @memberOf Adal4Service
    */
   public handleWindowCallback(): void {
@@ -167,11 +167,11 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} resource 
-   * @returns {string} 
-   * 
+   *
+   *
+   * @param {string} resource
+   * @returns {string}
+   *
    * @memberOf Adal4Service
    */
   public getCachedToken(resource: string): string {
@@ -179,15 +179,15 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} resource 
-   * @returns 
-   * 
+   *
+   *
+   * @param {string} resource
+   * @returns
+   *
    * @memberOf Adal4Service
    */
   public acquireToken(resource: string) {
-    let _this = this;   // save outer this for inner function
+    const _this = this;   // save outer this for inner function
 
     let errorMessage: string;
     return Observable.bindCallback(acquireTokenInternal, function (token: string) {
@@ -215,10 +215,10 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @returns {Observable<adal.User>} 
-   * 
+   *
+   *
+   * @returns {Observable<adal.User>}
+   *
    * @memberOf Adal4Service
    */
   public getUser(): Observable<adal.User> {
@@ -235,9 +235,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @memberOf Adal4Service
    */
   public clearCache(): void {
@@ -245,10 +245,10 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} resource 
-   * 
+   *
+   *
+   * @param {string} resource
+   *
    * @memberOf Adal4Service
    */
   public clearCacheForResource(resource: string): void {
@@ -256,10 +256,10 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} message 
-   * 
+   *
+   *
+   * @param {string} message
+   *
    * @memberOf Adal4Service
    */
   public info(message: string): void {
@@ -267,10 +267,10 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} message 
-   * 
+   *
+   *
+   * @param {string} message
+   *
    * @memberOf Adal4Service
    */
   public verbose(message: string): void {
@@ -278,11 +278,11 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @returns {string} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @returns {string}
+   *
    * @memberOf Adal4Service
    */
   public GetResourceForEndpoint(url: string): string {
@@ -290,9 +290,9 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @memberOf Adal4Service
    */
   public refreshDataFromCache() {
@@ -300,17 +300,17 @@ export class Adal4Service {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
-   * @param {string} resource 
-   * 
+   * @param {string} resource
+   *
    * @memberOf Adal4Service
    */
   private updateDataFromCache(resource: string): void {
-    let token = this.adalContext.getCachedToken(resource);
+    const token = this.adalContext.getCachedToken(resource);
     this.adal4User.authenticated = token !== null && token.length > 0;
-    let user = this.adalContext.getCachedUser() || { userName: '', profile: undefined };
+    const user = this.adalContext.getCachedUser() || { userName: '', profile: undefined };
     if (user) {
       this.adal4User.username = user.userName;
       this.adal4User.profile = user.profile;

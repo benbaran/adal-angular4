@@ -1,47 +1,49 @@
 {
-  "name": "adal-angular4",
-  "version": "0.1.4",
-  "description": "ADAL wrapper for Angular4.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/benbaran/adal-angular4.git"
-  },
-  "keywords": [
-    "adal",
-    "angular4"
-  ],
-  "author": "Ben Baran",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/benbaran/adal-angular4/issues"
-  },
-  "homepage": "https://github.com/benbaran/adal-angular4#readme",
-  "dependencies": {
-    "@angular/common": "^4.0.2",
-    "@angular/core": "^4.0.2",
-    "@angular/http": "^4.0.2",
-    "@angular/platform-browser": "^4.0.2",
-    "adal-angular": "^1.0.14",
-    "rxjs": "^5.3.0",
-    "zone.js": "^0.8.5"
-  },
-  "devDependencies": {
-    "@types/jasmine": "^2.5.47",
-    "del": "^2.2.2",
-    "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "gulp": "^3.9.1",
-    "gulp-bump": "^2.7.0",
-    "gulp-typescript": "^3.1.6",
-    "jshint": "^2.9.4",
-    "merge2": "^1.0.3",
-    "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
-  }
+    "name": "adal-angular4",
+    "version": "1.1.1",
+    "description": "ADAL wrapper for Angular4.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/benbaran/adal-angular4.git"
+    },
+    "keywords": [
+        "adal",
+        "angular4"
+    ],
+    "author": "Ben Baran",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/benbaran/adal-angular4/issues"
+    },
+    "homepage": "https://github.com/benbaran/adal-angular4#readme",
+    "dependencies": {
+        "@angular/common": "^4.3.1",
+        "@angular/core": "^4.3.1",
+        "@angular/http": "^4.3.1",
+        "@angular/platform-browser": "^4.3.1",
+        "adal-angular": "^1.0.15",
+        "rxjs": "^5.4.2",
+        "zone.js": "^0.8.14"
+    },
+    "devDependencies": {
+        "@angular/compiler": "^4.3.1",
+        "@types/jasmine": "^2.5.47",
+        "codelyzer": "^3.1.2",
+        "del": "^2.2.2",
+        "eslint": "^3.19.0",
+        "eslint-config-standard": "^10.2.1",
+        "eslint-plugin-promise": "^3.5.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "gulp": "^3.9.1",
+        "gulp-bump": "^2.7.0",
+        "gulp-typescript": "^3.1.6",
+        "jshint": "^2.9.4",
+        "merge2": "^1.0.3",
+        "tslint": "^5.5.0",
+        "typescript": "^2.4.2"
+    }
 }

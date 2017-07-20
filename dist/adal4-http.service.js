@@ -15,7 +15,7 @@ var rxjs_1 = require("rxjs");
  * @export
  * @class Adal4HTTPService
  */
-var Adal4HTTPService = Adal4HTTPService_1 = (function () {
+var Adal4HTTPService = (function () {
     /**
      * Creates an instance of Adal4HTTPService.
      * @param {Http} http
@@ -27,6 +27,7 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
         this.http = http;
         this.service = service;
     }
+    Adal4HTTPService_1 = Adal4HTTPService;
     /**
      *
      *
@@ -138,7 +139,7 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
      */
     Adal4HTTPService.prototype.sendRequest = function (url, options) {
         var _this = this;
-        //make a copy
+        // make a copy
         var options1 = new http_1.RequestOptions();
         options1.method = options.method;
         options1 = options1.merge(options);
@@ -157,7 +158,7 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
                 });
             }
             else {
-                authenticatedCall = rxjs_1.Observable.throw(new Error("User Not Authenticated."));
+                authenticatedCall = rxjs_1.Observable.throw(new Error('User Not Authenticated.'));
             }
         }
         else {
@@ -179,8 +180,8 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
             throw new Error('Bad response status: ' + res.status);
         }
         var body = {};
-        //if there is some content, parse it
-        if (res.status != 204) {
+        // if there is some content, parse it
+        if (res.status !== 204) {
             body = res.json();
         }
         return body || {};
@@ -200,10 +201,10 @@ var Adal4HTTPService = Adal4HTTPService_1 = (function () {
         console.error(JSON.stringify(error)); // log to console instead
         return rxjs_1.Observable.throw(error);
     };
+    Adal4HTTPService = Adal4HTTPService_1 = __decorate([
+        core_1.Injectable()
+    ], Adal4HTTPService);
     return Adal4HTTPService;
+    var Adal4HTTPService_1;
 }());
-Adal4HTTPService = Adal4HTTPService_1 = __decorate([
-    core_1.Injectable()
-], Adal4HTTPService);
 exports.Adal4HTTPService = Adal4HTTPService;
-var Adal4HTTPService_1;

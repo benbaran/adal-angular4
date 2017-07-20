@@ -1,6 +1,6 @@
 /**
- * 
- * 
+ *
+ *
  * @export
  * @class Adal4User
  */

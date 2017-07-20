@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { Adal4Service } from './adal4.service';
 
 /**
- * 
- * 
+ *
+ *
  * @export
  * @class Adal4HTTPService
  */
@@ -13,12 +13,12 @@ import { Adal4Service } from './adal4.service';
 export class Adal4HTTPService {
 
   /**
-   * 
-   * 
+   *
+   *
    * @static
-   * @param {Http} http 
-   * @param {Adal4Service} service 
-   * 
+   * @param {Http} http
+   * @param {Adal4Service} service
+   *
    * @memberOf Adal4HTTPService
    */
   static factory(http: Http, service: Adal4Service) {
@@ -27,9 +27,9 @@ export class Adal4HTTPService {
 
   /**
    * Creates an instance of Adal4HTTPService.
-   * @param {Http} http 
-   * @param {Adal4Service} service 
-   * 
+   * @param {Http} http
+   * @param {Adal4Service} service
+   *
    * @memberOf Adal4HTTPService
    */
   constructor(
@@ -38,12 +38,12 @@ export class Adal4HTTPService {
   ) { }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   get(url: string, options?: RequestOptionsArgs): Observable<any> {
@@ -53,13 +53,13 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {*} body 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {*} body
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
@@ -69,12 +69,12 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   delete(url: string, options?: RequestOptionsArgs): Observable<any> {
@@ -84,13 +84,13 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {*} body 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {*} body
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   patch(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
@@ -100,13 +100,13 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {*} body 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {*} body
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
@@ -116,12 +116,12 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
-   * @param {string} url 
-   * @param {RequestOptionsArgs} [options] 
-   * @returns {Observable<any>} 
-   * 
+   *
+   *
+   * @param {string} url
+   * @param {RequestOptionsArgs} [options]
+   * @returns {Observable<any>}
+   *
    * @memberOf Adal4HTTPService
    */
   head(url: string, options?: RequestOptionsArgs): Observable<any> {
@@ -131,22 +131,22 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
-   * @param {string} url 
-   * @param {RequestOptionsArgs} options 
-   * @returns {Observable<string>} 
-   * 
+   * @param {string} url
+   * @param {RequestOptionsArgs} options
+   * @returns {Observable<string>}
+   *
    * @memberOf Adal4HTTPService
    */
   private sendRequest(url: string, options: RequestOptionsArgs): Observable<string> {
-    //make a copy
+    // make a copy
     let options1 = new RequestOptions();
     options1.method = options.method;
     options1 = options1.merge(options);
 
-    let resource = this.service.GetResourceForEndpoint(url);
+    const resource = this.service.GetResourceForEndpoint(url);
     let authenticatedCall: Observable<string>;
     if (resource) {
       if (this.service.userInfo.authenticated) {
@@ -161,23 +161,21 @@ export class Adal4HTTPService {
           });
       }
       else {
-        authenticatedCall = Observable.throw(new Error("User Not Authenticated."));
+        authenticatedCall = Observable.throw(new Error('User Not Authenticated.'));
       }
     }
-    else {
-      authenticatedCall = this.http.request(url, options).map(this.extractData).catch(this.handleError);
-    }
+    else { authenticatedCall = this.http.request(url, options).map(this.extractData).catch(this.handleError); }
 
     return authenticatedCall;
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
-   * @param {Response} res 
-   * @returns 
-   * 
+   * @param {Response} res
+   * @returns
+   *
    * @memberOf Adal4HTTPService
    */
   private extractData(res: Response) {
@@ -185,9 +183,9 @@ export class Adal4HTTPService {
       throw new Error('Bad response status: ' + res.status);
     }
 
-    var body = {};
-    //if there is some content, parse it
-    if (res.status != 204) {
+    let body = {};
+    // if there is some content, parse it
+    if (res.status !== 204) {
       body = res.json();
     }
 
@@ -195,17 +193,17 @@ export class Adal4HTTPService {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @private
-   * @param {*} error 
-   * @returns 
-   * 
+   * @param {*} error
+   * @returns
+   *
    * @memberOf Adal4HTTPService
    */
   private handleError(error: any) {
     // In a real world app, we might send the error to remote logging infrastructure
-    let errMsg = error.message || 'Server error';
+    const errMsg = error.message || 'Server error';
     console.error(JSON.stringify(error)); // log to console instead
 
     return Observable.throw(error);

@@ -10,6 +10,15 @@ Working example at [https://github.com/benbaran/adal-angular4-example](https://g
 
 ___
 
+## Change Log
+
+### 1.0
+
+- Added HTTP Interceptor for Angular 4.3.0+
+- Updated all packages to newest versions
+
+___
+
 ## How to Create and Publish a NPM Package
 
 ### Create a GitHub Account
