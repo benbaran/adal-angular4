@@ -12,7 +12,11 @@ ___
 
 ## Change Log
 
-### 1.0
+### 1.1.4
+
+- Hash is now removed from url after login
+
+### 1.0.1
 
 - Added HTTP Interceptor for Angular 4.3.0+
 - Updated all packages to newest versions

@@ -164,6 +164,11 @@ export class Adal4Service {
         }
       }
     }
+
+    // Remove hash from url
+    if (window.location.hash) {
+      window.location.href = window.location.href.replace(window.location.hash, '');
+    }
   }
 
   /**
