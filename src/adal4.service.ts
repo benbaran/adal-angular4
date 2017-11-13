@@ -157,7 +157,7 @@ export class Adal4Service {
               this.adalContext.callback(this.adalContext._getItem(this.adalContext.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
                 , requestInfo.parameters['access_token']);
             }
-            if (requestInfo.parameters['id_token']) {
+            else if (requestInfo.parameters['id_token']) {
               this.adalContext.callback(this.adalContext._getItem(this.adalContext.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
                 , requestInfo.parameters['id_token']);
             }
