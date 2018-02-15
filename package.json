@@ -1,49 +1,72 @@
 {
-    "name": "adal-angular4",
-    "version": "1.1.11",
-    "description": "ADAL wrapper for Angular4.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/benbaran/adal-angular4.git"
-    },
-    "keywords": [
-        "adal",
-        "angular4"
-    ],
-    "author": "Ben Baran",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/benbaran/adal-angular4/issues"
-    },
-    "homepage": "https://github.com/benbaran/adal-angular4#readme",
-    "dependencies": {
-        "@angular/common": "^4.3.1",
-        "@angular/core": "^4.3.1",
-        "@angular/http": "^4.3.1",
-        "@angular/platform-browser": "^4.3.1",
-        "adal-angular": "^1.0.15",
-        "rxjs": "^5.4.2",
-        "zone.js": "^0.8.14"
-    },
-    "devDependencies": {
-        "@angular/compiler": "^4.3.1",
-        "@types/jasmine": "^2.5.47",
-        "codelyzer": "^3.1.2",
-        "del": "^2.2.2",
-        "eslint": "^3.19.0",
-        "eslint-config-standard": "^10.2.1",
-        "eslint-plugin-promise": "^3.5.0",
-        "eslint-plugin-standard": "^3.0.1",
-        "gulp": "^3.9.1",
-        "gulp-bump": "^2.7.0",
-        "gulp-typescript": "^3.1.6",
-        "jshint": "^2.9.4",
-        "merge2": "^1.0.3",
-        "tslint": "^5.5.0",
-        "typescript": "^2.4.2"
-    }
+  "name": "adal-angular4",
+  "version": "2.0.1",
+  "description": "ADAL wrapper for Angular4.",
+  "main": "index.js",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/benbaran/adal-angular4.git"
+  },
+  "keywords": [
+      "adal",
+      "angular4"
+  ],
+  "author": "Ben Baran",
+  "license": "MIT",
+  "bugs": {
+      "url": "https://github.com/benbaran/adal-angular4/issues"
+  },
+  "homepage": "https://github.com/benbaran/adal-angular4#readme",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "private": false,
+  "dependencies": {
+    "@angular/animations": "^5.2.5",
+    "@angular/cdk": "^5.2.1",
+    "@angular/common": "^5.2.0",
+    "@angular/compiler": "^5.2.0",
+    "@angular/core": "^5.2.0",
+    "@angular/forms": "^5.2.0",
+    "@angular/http": "^5.2.0",
+    "@angular/material": "^5.2.1",
+    "@angular/platform-browser": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.0",
+    "@angular/router": "^5.2.0",
+    "adal-angular": "^1.0.16",
+    "core-js": "^2.4.1",
+    "hammerjs": "^2.0.8",
+    "rxjs": "^5.5.6",
+    "zone.js": "^0.8.19"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.6.8",
+    "@angular/compiler-cli": "^5.2.0",
+    "@angular/language-service": "^5.2.0",
+    "@types/jasmine": "~2.8.3",
+    "@types/jasminewd2": "~2.0.2",
+    "@types/node": "~6.0.60",
+    "codelyzer": "^4.0.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^3.1.0",
+    "gulp-typescript": "^4.0.1",
+    "jasmine-core": "~2.8.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "^1.2.1",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "merge2": "^1.2.1",
+    "protractor": "~5.1.2",
+    "ts-node": "~4.1.0",
+    "tslint": "~5.9.1",
+    "typescript": "~2.5.3"
+  }
 }

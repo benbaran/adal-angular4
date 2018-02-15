@@ -1,32 +1,19 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "noImplicitAny": true,
-    "experimentalDecorators": true,
-    "outDir": "dist/",
-    "rootDir": "src/",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
-    " declaration": true,
+    "declaration": false,
     "moduleResolution": "node",
-    "removeComments": false,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "types": [
-      "adal"
-    ],
-    "exclude": [
-      "node_modules",
-      "dist"
-    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
     "typeRoots": [
-      "./src"
+      "node_modules/@types"
     ],
-    "skipLibCheck": false,
-     "globalDependencies": {
-        "adal": "file:./src/adal.d.ts"
-    }
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   }
 }
