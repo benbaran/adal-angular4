@@ -41,7 +41,7 @@ gulp.task('build', function (cb) {
     });
 });
 
-gulp.task('bump', ['clean'], function () {
+gulp.task('bump', function () {
     gulp.src('./package.json')
         .pipe(bump({
             type: 'patch'
@@ -49,7 +49,7 @@ gulp.task('bump', ['clean'], function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('git-add', ['package'], function (cb) {
+gulp.task('git-add', ['bump'], function (cb) {
     exec('git add -A', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);

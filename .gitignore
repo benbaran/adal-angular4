@@ -41,5 +41,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-adal-angular4/dist/
-adal-angular4/node_modules/
