@@ -12,6 +12,9 @@ ___
 
 ## Change Log
 
+### 1.1.11
+- Fixed a bug where the valid scenario of refreshing an id_token is not handled - thanks to @alan-g-chen.
+
 ### 1.1.4
 
 - Hash is now removed from url after login
