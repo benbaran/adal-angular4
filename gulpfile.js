@@ -74,3 +74,21 @@ gulp.task('git-commit', ['git-add'], function (cb) {
         cb(err);
     });
 });
+
+gulp.task('git-push', ['git-commit'], function (cb) {
+
+    exec('git push', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('publish', ['git-push'], function (cb) {
+
+    exec('npm publish adal-angular4/dist', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
