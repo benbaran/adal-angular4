@@ -1,16 +1,13 @@
 {
   "name": "adal-angular4",
-  "version": "2.0.8",
+  "version": "2.0.10",
   "description": "Angular 4+ ADAL Wrapper",
   "main": "index.js",
   "scripts": {
-    "gulp-clean": "gulp clean",
-    "gulp-copy": "gulp copy",
-    "gulp-copy-package": "gulp copy-package",
-    "gulp-replace": "gulp replace",
+    "clean": "gulp clean",
     "compile": "node_modules/.bin/ngc -p tsconfig-aot.json",
-    "build": "npm run gulp-clean && npm run gulp-copy && npm run gulp-copy-package && npm run compile && npm run gulp-replace",
-    "publish": "npm run build && npm run gulp-copy && gulp publish"
+    "build": "npm run clean && npm run compile && gulp copy && gulp replace",
+    "publish": "npm run build && gulp bump && gulp copy-package && gulp publish && gulp git-add && gulp git-commit && gulp git-push"
   },
   "repository": {
     "type": "git",

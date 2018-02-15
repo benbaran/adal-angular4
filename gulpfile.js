@@ -27,11 +27,11 @@ gulp.task('copy-package', function (cb) {
     fs.writeFileSync(filepath, JSON.stringify(pkgjson, null, 2), 'utf-8');
 });
 
-gulp.task('replace', function(){
+gulp.task('replace', function () {
     gulp.src(['./dist/adal.service.d.ts'])
-      .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
-      .pipe(gulp.dest('./dist'));
-  });
+        .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
+        .pipe(gulp.dest('./dist'));
+});
 
 gulp.task('build', function (cb) {
     exec('npm run build', function (err, stdout, stderr) {
@@ -49,7 +49,7 @@ gulp.task('bump', function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('git-add', ['bump'], function (cb) {
+gulp.task('git-add', function (cb) {
     exec('git add -A', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
@@ -58,7 +58,7 @@ gulp.task('git-add', ['bump'], function (cb) {
 });
 
 
-gulp.task('git-commit', ['git-add'], function (cb) {
+gulp.task('git-commit', function (cb) {
 
     var package = require('./package.json');
 
@@ -69,7 +69,7 @@ gulp.task('git-commit', ['git-add'], function (cb) {
     });
 });
 
-gulp.task('git-push', ['git-commit'], function (cb) {
+gulp.task('git-push', function (cb) {
 
     exec('git push', function (err, stdout, stderr) {
         console.log(stdout);
@@ -78,7 +78,7 @@ gulp.task('git-push', ['git-commit'], function (cb) {
     });
 });
 
-gulp.task('publish', ['git-push'], function (cb) {
+gulp.task('publish', function (cb) {
 
     exec('npm publish ./dist', function (err, stdout, stderr) {
         console.log(stdout);
