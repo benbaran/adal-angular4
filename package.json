@@ -1,20 +1,20 @@
 {
   "name": "adal-angular4",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "ADAL wrapper for Angular4.",
   "main": "index.js",
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/benbaran/adal-angular4.git"
+    "type": "git",
+    "url": "git+https://github.com/benbaran/adal-angular4.git"
   },
   "keywords": [
-      "adal",
-      "angular4"
+    "adal",
+    "angular4"
   ],
   "author": "Ben Baran",
   "license": "MIT",
   "bugs": {
-      "url": "https://github.com/benbaran/adal-angular4/issues"
+    "url": "https://github.com/benbaran/adal-angular4/issues"
   },
   "homepage": "https://github.com/benbaran/adal-angular4#readme",
   "scripts": {
