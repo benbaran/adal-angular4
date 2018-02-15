@@ -1,62 +1,55 @@
 var
-  bump = require('gulp-bump'),
-  del = require('del'),
-  exec = require('child_process').exec,
-  gulp = require('gulp'),
-  merge = require('merge2'),
-  typescript = require('gulp-typescript')
+    bump = require('gulp-bump'),
+    del = require('del'),
+    exec = require('child_process').exec,
+    gulp = require('gulp'),
+    replace = require('gulp-replace'),
+    fs = require('fs');
 
 gulp.task('clean', function () {
-  del(['adal-angular4/dist/*']);
+    del(['./dist/*']);
+});
+
+gulp.task('copy', function (cb) {
+    gulp.src(['adal-angular.d.ts']).pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('copy-package', function (cb) {
+
+    const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+
+    delete pkgjson.scripts;
+
+    delete pkgjson.devDependencies;
+
+    const filepath = './dist/package.json';
+
+    fs.writeFileSync(filepath, JSON.stringify(pkgjson, null, 2), 'utf-8');
+});
+
+gulp.task('replace', function(){
+    gulp.src(['./dist/adal.service.d.ts'])
+      .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
+      .pipe(gulp.dest('./dist'));
+  });
+
+gulp.task('build', function (cb) {
+    exec('npm run build', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 });
 
 gulp.task('bump', ['clean'], function () {
-  gulp.src('adal-angular4/package.json')
-    .pipe(bump({
-      type: 'patch'
-    }))
-    .pipe(gulp.dest('adal-angular4/'));
-    gulp.src('package.json')
-    .pipe(bump({
-      type: 'patch'
-    }))
-    .pipe(gulp.dest('./'));
+    gulp.src('./package.json')
+        .pipe(bump({
+            type: 'patch'
+        }))
+        .pipe(gulp.dest('./'));
 });
 
-gulp.task('bundle', ['bump'], function () {
-    var tsResult = gulp.src('src/app/adal/*.ts')
-        .pipe(typescript({
-            module: "commonjs",
-            target: "es5",
-            noImplicitAny: true,
-            experimentalDecorators: true,
-            outDir: "dist/",
-            rootDir: "src/",
-            sourceMap: true,
-            declaration: true,
-            moduleResolution: "node",
-            removeComments: false,
-            lib: [
-                "es2015",
-                "dom"
-            ],
-            types: ["jasmine"]
-        }));
-
-    return merge([
-        tsResult.dts.pipe(gulp.dest('adal-angular4/dist/')),
-        tsResult.js.pipe(gulp.dest('adal-angular4/dist/'))
-    ]);
-});
-
-
-gulp.task('copy', ['bundle'], () => {
-
-    gulp.src(['src/app/adal/adal-angular.d.ts', 'README.md', 'LICENSE', 'adal-angular4/package.json'])
-        .pipe(gulp.dest('adal-angular4/dist/'));
-});
-
-gulp.task('git-add', ['copy'], function (cb) {
+gulp.task('git-add', ['package'], function (cb) {
     exec('git add -A', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
@@ -64,9 +57,10 @@ gulp.task('git-add', ['copy'], function (cb) {
     });
 });
 
+
 gulp.task('git-commit', ['git-add'], function (cb) {
 
-    var package = require('./adal-angular4/package.json');
+    var package = require('./package.json');
 
     exec('git commit -m "Version ' + package.version + ' release."', function (err, stdout, stderr) {
         console.log(stdout);
@@ -86,7 +80,7 @@ gulp.task('git-push', ['git-commit'], function (cb) {
 
 gulp.task('publish', ['git-push'], function (cb) {
 
-    exec('npm publish adal-angular4/dist', function (err, stdout, stderr) {
+    exec('npm publish ./dist', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
