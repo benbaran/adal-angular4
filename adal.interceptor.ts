@@ -10,18 +10,27 @@ export class AdalInterceptor implements HttpInterceptor {
     constructor(private adal: AdalService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const url = req.url;
-        const resource = this.adal.GetResourceForEndpoint(url);
-        if (resource && this.adal.userInfo.authenticated) {
-            let headers = req.headers || new HttpHeaders();
-            this.adal.acquireToken(resource)
-                .subscribe((token: string) => {
-                    headers = headers.append('Authorization', 'Bearer ' + token);
-                }
-            );
-            return next.handle(req.clone({ headers: headers }));        
-        } else {
+
+        // if the endpoint is not registered then pass
+        // the request as it is to the next handler
+        const resource = this.adal.GetResourceForEndpoint(req.url);
+        if (!resource) {
             return next.handle(req.clone());
         }
+
+        // is the endpoint is registered but the user
+        // is not authenticated then drop the request
+        if (!this.adal.userInfo.authenticated) {
+            throw new Error('Cannot send request to registered endpoint if the user is not authenticated.');
+        }
+
+        // is the endpoint is registered and the user
+        // is authenticaten then acquire and inject token
+        let headers = req.headers || new HttpHeaders();
+        this.adal.acquireToken(resource)
+            .subscribe((token: string) => {
+                headers = headers.append('Authorization', 'Bearer ' + token);
+            });
+        return next.handle(req.clone({ headers: headers }));
     }
 }
