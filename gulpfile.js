@@ -4,15 +4,17 @@ var
     exec = require('child_process').exec,
     gulp = require('gulp'),
     replace = require('gulp-replace'),
+    watch = require('gulp-watch'),
     fs = require('fs');
 
-// delete ./dist directory
+// delete content of ./dist directory
 gulp.task('clean', function () {
-    del(['./dist/*']);
+    del(['./dist/*', '!dist/index.js']);
 });
 
 // execute npm compile script
-gulp.task('compile', ['clean'], function (cb) {
+gulp.task('compile', function (cb) {
+//gulp.task('compile', ['clean'], function (cb) {
     exec('npm run compile', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
@@ -79,7 +81,7 @@ gulp.task('git-push', ['git-commit'], function (cb) {
 });
 
 // publish ./dist directory to npm
-gulp.task('publish', ['git-push'], function (cb) {
+gulp.task('publish', ['clean', 'git-push'], function (cb) {
     exec('npm publish ./dist', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
@@ -87,5 +89,12 @@ gulp.task('publish', ['git-push'], function (cb) {
     });
 });
 
-// build ./dist folder - used for development
-gulp.task('default', ['replace'], function (cb) {});
+// build ./dist folder
+gulp.task('default', ['replace'], function () {});
+
+// watch for changes and rebuild ./dist folder
+gulp.task('watch', ['default'], function (cb) {
+    return watch('*', function () {
+        gulp.start('default');
+    });
+});
