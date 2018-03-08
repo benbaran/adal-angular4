@@ -1,18 +1,36 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AdalService } from './adal.service';
-
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AdalInterceptor implements HttpInterceptor {
 
-    constructor(private adalService: AdalService) { }
+    constructor(private adal: AdalService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const authReq = req.clone({ headers: req.headers.set('Authorization', `Bearer ${this.adalService.userInfo.token}`) });
+        // if the endpoint is not registered then pass
+        // the request as it is to the next handler
+        const resource = this.adal.GetResourceForEndpoint(req.url);
+        if (!resource) {
+            return next.handle(req.clone());
+        }
 
-        return next.handle(authReq);
+        // is the endpoint is registered but the user
+        // is not authenticated then drop the request
+        if (!this.adal.userInfo.authenticated) {
+            throw new Error('Cannot send request to registered endpoint if the user is not authenticated.');
+        }
+
+        // is the endpoint is registered and the user
+        // is authenticaten then acquire and inject token
+        let headers = req.headers || new HttpHeaders();
+        this.adal.acquireToken(resource)
+            .subscribe((token: string) => {
+                headers = headers.append('Authorization', 'Bearer ' + token);
+            });
+        return next.handle(req.clone({ headers: headers }));
     }
 }
