@@ -18,11 +18,11 @@ export class AdalInterceptor implements HttpInterceptor {
             return next.handle(req.clone());
         }
 
-        // is the endpoint is registered then acquire and inject token
+        // if the endpoint is registered then acquire and inject token
         let headers = req.headers || new HttpHeaders();
         return this.adal.acquireToken(resource)
             .mergeMap((token: string) => {
-                // is the user is not authenticated then drop the request
+                // if the user is not authenticated then drop the request
                 if (!this.adal.userInfo.authenticated) {
                     throw new Error('Cannot send request to registered endpoint if the user is not authenticated.');
                 }
