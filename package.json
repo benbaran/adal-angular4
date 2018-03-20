@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Angular 4+ ADAL Wrapper",
   "main": "index.js",
   "scripts": {
@@ -48,6 +48,7 @@
     "zone.js": "^0.8.20"
   },
   "dependencies": {
-    "adal-angular": "=1.0.15"
+    "adal-angular": "=1.0.15",
+    "npm": "^5.7.1"
   }
 }
