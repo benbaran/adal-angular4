@@ -13,7 +13,7 @@ export class AdalService {
 
     private user: adal.User = {
         authenticated: false,
-        username: '',
+        userName: '',
         error: '',
         token: '',
         profile: {}
@@ -175,14 +175,14 @@ export class AdalService {
     private updateDataFromCache(resource: string): void {
         const token = this.context.getCachedToken(resource);
         this.user.authenticated = token !== null && token.length > 0;
-        const user = this.context.getCachedUser() || { username: '', profile: <any>undefined };
+        const user = this.context.getCachedUser() || { userName: '', profile: <any>undefined };
         if (user) {
-            this.user.username = user.username;
+            this.user.userName = user.userName;
             this.user.profile = user.profile;
             this.user.token = token;
             this.user.error = this.context.getLoginError();
         } else {
-            this.user.username = '';
+            this.user.userName = '';
             this.user.profile = {};
             this.user.token = '';
             this.user.error = '';

@@ -44,7 +44,7 @@ declare namespace adal {
      * @interface User
      */
     interface User {
-        username: string;
+        userName: string;
         profile: any;
         authenticated: any;
         error: any;
