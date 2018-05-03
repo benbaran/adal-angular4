@@ -99,7 +99,11 @@ export class AdalService {
 
         // Remove hash from url
         if (window.location.hash) {
-            window.location.href = window.location.href.replace(window.location.hash, '');
+            if (window.history.replaceState) {
+                window.history.replaceState('', '/', window.location.pathname)
+            } else {
+                window.location.hash = '';
+            }
         }
     }
 
