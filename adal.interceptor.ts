@@ -1,8 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
 import { AdalService } from './adal.service';
-import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class AdalInterceptor implements HttpInterceptor {
@@ -25,12 +26,13 @@ export class AdalInterceptor implements HttpInterceptor {
 
         // if the endpoint is registered then acquire and inject token
         let headers = req.headers || new HttpHeaders();
-        return this.adal.acquireToken(resource)
-            .mergeMap((token: string) => {
+        return this.adal.acquireToken(resource).pipe(
+            mergeMap((token: string) => {
                 // inject the header
                 headers = headers.append('Authorization', 'Bearer ' + token);
                 return next.handle(req.clone({ headers: headers }));
             }
-        );
+            )
+        )
     }
 }

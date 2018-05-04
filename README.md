@@ -2,10 +2,13 @@
 
 ___
 
-Angular 4+ Adal wrapper package. Can be used to authenticate Angular 4 applications against Azure Active Directory v1 endpoint.
+Angular 4+ Adal wrapper package. Can be used to authenticate Angular applications against Azure Active Directory v1 endpoint.
 ___
 
 ## Change Log
+
+### 3.0.1
+- Updated to Angular 6, cleaned up files. THIS IS A BREAKING VERSION!
 
 ### 2.0.0
 - Updated to Angular 5, cleaned up files. THIS IS A BREAKING VERSION!
