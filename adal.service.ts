@@ -141,7 +141,7 @@ export class AdalService {
         const __this = this;   // save outer this for inner function
 
         return bindCallback((cb: any) => {
-            this.context.getUser(function (error: string, user: any) {
+            __this.context.getUser(function (error: string, user: any) {
                 if (error) {
                     __this.context.error('Error when getting user', error);
                     cb(null);
