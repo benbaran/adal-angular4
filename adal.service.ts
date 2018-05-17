@@ -138,10 +138,12 @@ export class AdalService {
     }
 
     public getUser(): Observable<any> {
+        const __this = this;   // save outer this for inner function
+
         return bindCallback((cb: any) => {
             this.context.getUser(function (error: string, user: any) {
                 if (error) {
-                    this.context.error('Error when getting user', error);
+                    __this.context.error('Error when getting user', error);
                     cb(null);
                 } else {
                     cb(user);
