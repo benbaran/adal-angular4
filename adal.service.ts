@@ -141,7 +141,7 @@ export class AdalService {
         return bindCallback((cb: any) => {
             this.context.getUser(function (error: string, user: any) {
                 if (error) {
-                    this.context.error('Error when getting user', error);
+                    _this.context.error('Error when getting user', error);
                     cb(null);
                 } else {
                     cb(user);
