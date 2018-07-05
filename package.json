@@ -1,6 +1,6 @@
 {
   "name": "adal-angular4",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Angular 4+ ADAL Wrapper",
   "main": "index.js",
   "scripts": {
@@ -36,12 +36,12 @@
     "gulp-watch": "^5.0.0",
     "rollup": "0.62.0",
     "rxjs": "6.2.1",
-    "typescript": "^2.7.2",
+    "typescript": "=2.7.2",
     "uglify-js": "3.4.3",
     "zone.js": "0.8.26"
   },
   "dependencies": {
-    "adal-angular": "1.0.17",
+    "adal-angular": "=1.0.15",
     "npm": "6.1.0"
   }
 }
