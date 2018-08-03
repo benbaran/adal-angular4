@@ -1,13 +1,14 @@
 /// <reference path="adal-angular.d.ts" />
 
 import { Injectable } from '@angular/core';
-import { Observable, bindCallback} from 'rxjs';
+import { Observable, bindCallback, timer } from 'rxjs';
 import * as lib from 'adal-angular';
 
 @Injectable()
 export class AdalService {
 
     private context: adal.AuthenticationContext = <any>null;
+    private loginRefreshTimer = <any>null;
 
     private user: adal.User = {
         authenticated: false,
@@ -46,7 +47,13 @@ export class AdalService {
 
         if (this.user.loginCached && !this.user.authenticated && window.self == window.top) {
             this.refreshLoginToken();
-        } 
+        } else if (this.user.loginCached && this.user.authenticated && !this.loginRefreshTimer && window.self == window.top) {
+            // Get expiration of login token
+            let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
+            this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
+                this.refreshLoginToken()
+            });
+        }
     }
 
     public get config(): adal.Config {
@@ -201,17 +208,28 @@ export class AdalService {
     }
 
     private refreshLoginToken(): void {
-        if (!this.user.loginCached) throw("User not logged in");
+        if (!this.user.loginCached) throw ("User not logged in");
         this.acquireToken(<any>this.context.config.loginResource).subscribe((token: string) => {
             this.user.token = token;
             if (this.user.authenticated == false) {
                 this.user.authenticated = true;
                 this.user.error = '';
                 window.location.reload();
+            } else {
+                // Get expiration of login token
+                let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
+                if (this.loginRefreshTimer) this.loginRefreshTimer.unsubscribe();
+                this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
+                    this.refreshLoginToken()
+                });
             }
         }, (error: string) => {
             this.user.authenticated = false;
             this.user.error = this.context.getLoginError();
         });
     }
+
+    private now(): number {
+        return Math.round(new Date().getTime() / 1000.0);
+    };
 }
