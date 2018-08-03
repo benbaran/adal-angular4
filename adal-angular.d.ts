@@ -49,6 +49,7 @@ declare namespace adal {
         authenticated: any;
         error: any;
         token: any;
+        loginCached: boolean;
     }
 
     /**

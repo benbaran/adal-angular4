@@ -14,7 +14,8 @@ export class AdalService {
         userName: '',
         error: '',
         token: '',
-        profile: {}
+        profile: {},
+        loginCached: false
     };
 
     constructor() { }
@@ -41,7 +42,11 @@ export class AdalService {
         window.AuthenticationContext = this.context.constructor;
 
         // loginresource is used to set authenticated status
-        this.updateDataFromCache(<any>this.context.config.loginResource);
+        this.updateDataFromCache();
+
+        if (this.user.loginCached && !this.user.authenticated && window.self == window.top) {
+            this.refreshLoginToken();
+        } 
     }
 
     public get config(): adal.Config {
@@ -70,7 +75,7 @@ export class AdalService {
             const requestInfo = this.context.getRequestInfo(hash);
             this.context.saveTokenFromHash(requestInfo);
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
-                this.updateDataFromCache(<any>this.context.config.loginResource);
+                this.updateDataFromCache();
 
             } else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                 this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
@@ -173,23 +178,40 @@ export class AdalService {
     }
 
     public refreshDataFromCache() {
-        this.updateDataFromCache(<any>this.context.config.loginResource);
+        this.updateDataFromCache();
     }
 
-    private updateDataFromCache(resource: string): void {
-        const token = this.context.getCachedToken(resource);
+    private updateDataFromCache(): void {
+        const token = this.context.getCachedToken(<any>this.context.config.loginResource);
         this.user.authenticated = token !== null && token.length > 0;
-        const user = this.context.getCachedUser() || { userName: '', profile: <any>undefined };
+        const user = this.context.getCachedUser();
         if (user) {
             this.user.userName = user.userName;
             this.user.profile = user.profile;
             this.user.token = token;
             this.user.error = this.context.getLoginError();
+            this.user.loginCached = true;
         } else {
             this.user.userName = '';
             this.user.profile = {};
             this.user.token = '';
-            this.user.error = '';
+            this.user.error = this.context.getLoginError();
+            this.user.loginCached = false;
         }
+    }
+
+    private refreshLoginToken(): void {
+        if (!this.user.loginCached) throw("User not logged in");
+        this.acquireToken(<any>this.context.config.loginResource).subscribe((token: string) => {
+            this.user.token = token;
+            if (this.user.authenticated == false) {
+                this.user.authenticated = true;
+                this.user.error = '';
+                window.location.reload();
+            }
+        }, (error: string) => {
+            this.user.authenticated = false;
+            this.user.error = this.context.getLoginError();
+        });
     }
 }
