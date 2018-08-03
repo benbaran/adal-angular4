@@ -1,21 +1,27 @@
 /// <reference path="adal-angular.d.ts" />
 
 import { Injectable } from '@angular/core';
-import { Observable, bindCallback } from 'rxjs';
+
+import { Observable, bindCallback, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import * as lib from 'adal-angular';
 
 @Injectable()
 export class AdalService {
 
-    private context: adal.AuthenticationContext = null as any;
+
+    private context: adal.AuthenticationContext = <any>null;
+    private loginRefreshTimer = <any>null;
+
 
     private user: adal.User = {
         authenticated: false,
         userName: '',
         error: '',
         token: '',
-        profile: {}
+        profile: {},
+        loginCached: false
     };
 
     constructor() { }
@@ -42,7 +48,19 @@ export class AdalService {
         window.AuthenticationContext = this.context.constructor;
 
         // loginresource is used to set authenticated status
-        this.updateDataFromCache(this.context.config.loginResource as string);
+
+        this.updateDataFromCache();
+
+        if (this.user.loginCached && !this.user.authenticated && window.self == window.top) {
+            this.refreshLoginToken();
+        } else if (this.user.loginCached && this.user.authenticated && !this.loginRefreshTimer && window.self == window.top) {
+            // Get expiration of login token
+            let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
+            this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
+                this.refreshLoginToken()
+            });
+        }
+
     }
 
     public get config(): adal.Config {
@@ -71,8 +89,7 @@ export class AdalService {
             const requestInfo = this.context.getRequestInfo(hash);
             this.context.saveTokenFromHash(requestInfo);
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
-                this.updateDataFromCache(this.context.config.loginResource as string);
-
+                this.updateDataFromCache();
             } else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                 this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
             }
@@ -165,24 +182,56 @@ export class AdalService {
         return this.context.getResourceForEndpoint(url);
     }
 
-    public refreshDataFromCache(): void {
-        this.updateDataFromCache(this.context.config.loginResource as string);
+
+    public refreshDataFromCache() {
+        this.updateDataFromCache();
+
     }
 
-    private updateDataFromCache(resource: string): void {
-        const token = this.context.getCachedToken(resource);
+    private updateDataFromCache(): void {
+        const token = this.context.getCachedToken(<any>this.context.config.loginResource);
         this.user.authenticated = token !== null && token.length > 0;
-        const user = this.context.getCachedUser() || { userName: '', profile: undefined };
+
+        const user = this.context.getCachedUser();
+
         if (user) {
             this.user.userName = user.userName;
             this.user.profile = user.profile;
             this.user.token = token;
             this.user.error = this.context.getLoginError();
+            this.user.loginCached = true;
         } else {
             this.user.userName = '';
             this.user.profile = {};
             this.user.token = '';
-            this.user.error = '';
+            this.user.error = this.context.getLoginError();
+            this.user.loginCached = false;
         }
     }
+
+    private refreshLoginToken(): void {
+        if (!this.user.loginCached) throw ("User not logged in");
+        this.acquireToken(<any>this.context.config.loginResource).subscribe((token: string) => {
+            this.user.token = token;
+            if (this.user.authenticated == false) {
+                this.user.authenticated = true;
+                this.user.error = '';
+                window.location.reload();
+            } else {
+                // Get expiration of login token
+                let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
+                if (this.loginRefreshTimer) this.loginRefreshTimer.unsubscribe();
+                this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
+                    this.refreshLoginToken()
+                });
+            }
+        }, (error: string) => {
+            this.user.authenticated = false;
+            this.user.error = this.context.getLoginError();
+        });
+    }
+
+    private now(): number {
+        return Math.round(new Date().getTime() / 1000.0);
+    };
 }
