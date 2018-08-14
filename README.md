@@ -7,6 +7,9 @@ ___
 
 ## Change Log
 
+### 3.0.7
+- Added an automatic login token refresh feature. It will refresh tokens at application load if there is a valid sign-in token. It will also refresh the login token 5 minutes before it expires.
+
 ### 3.0.1
 - Updated to Angular 6, cleaned up files. THIS IS A BREAKING VERSION!
 
