@@ -8,15 +8,19 @@ ___
 ## Change Log
 
 ### 3.0.7
+
 - Added an automatic login token refresh feature. It will refresh tokens at application load if there is a valid sign-in token. It will also refresh the login token 5 minutes before it expires.
 
 ### 3.0.1
+
 - Updated to Angular 6, cleaned up files. THIS IS A BREAKING VERSION!
 
 ### 2.0.0
+
 - Updated to Angular 5, cleaned up files. THIS IS A BREAKING VERSION!
 
 ### 1.1.11
+
 - Fixed a bug where the valid scenario of refreshing an id_token is not handled - thanks to @alan-g-chen.
 
 ### 1.1.4
@@ -28,3 +32,18 @@ ___
 - Added HTTP Interceptor for Angular 4.3.0+
 - Updated all packages to newest versions
 
+### Buitd Instructions
+
+-- git clone <https://github.com/benbaran/adal-angular4.git>
+
+-- npm install -g @angular/cli@latest
+
+-- del .\package-lock.json
+
+-- ng update --all --force
+
+-- npm install typescript@2.7.2
+
+-- npm install adal-angular@1.0.15
+
+-- npm run compile
