@@ -51,7 +51,7 @@ export class AdalService {
 
         this.updateDataFromCache();
 
-        if (this.user.loginCached && !this.user.authenticated && window.self == window.top) {
+        if (this.user.loginCached && !this.user.authenticated && window.self == window.top && !this.isInCallbackRedirectMode) {
             this.refreshLoginToken();
         } else if (this.user.loginCached && this.user.authenticated && !this.loginRefreshTimer && window.self == window.top) {
             // Get expiration of login token
@@ -233,5 +233,9 @@ export class AdalService {
 
     private now(): number {
         return Math.round(new Date().getTime() / 1000.0);
-    };
+    }
+
+    private get isInCallbackRedirectMode(): boolean {
+      return window.location.href.indexOf("#access_token") !== -1 || window.location.href.indexOf("#id_token") !== -1;
+    }
 }
