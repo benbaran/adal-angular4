@@ -54,11 +54,7 @@ export class AdalService {
         if (this.user.loginCached && !this.user.authenticated && window.self == window.top && !this.isInCallbackRedirectMode) {
             this.refreshLoginToken();
         } else if (this.user.loginCached && this.user.authenticated && !this.loginRefreshTimer && window.self == window.top) {
-            // Get expiration of login token
-            let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
-            this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
-                this.refreshLoginToken()
-            });
+            this.setupLoginTokenRefreshTimer();
         }
 
     }
@@ -90,6 +86,7 @@ export class AdalService {
             this.context.saveTokenFromHash(requestInfo);
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
                 this.updateDataFromCache();
+                this.setupLoginTokenRefreshTimer();
             } else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                 this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
             }
@@ -218,12 +215,7 @@ export class AdalService {
                 this.user.error = '';
                 window.location.reload();
             } else {
-                // Get expiration of login token
-                let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
-                if (this.loginRefreshTimer) this.loginRefreshTimer.unsubscribe();
-                this.loginRefreshTimer = timer(exp - this.now() - 300).subscribe((x) => {
-                    this.refreshLoginToken()
-                });
+                this.setupLoginTokenRefreshTimer();
             }
         }, (error: string) => {
             this.user.authenticated = false;
@@ -237,5 +229,18 @@ export class AdalService {
 
     private get isInCallbackRedirectMode(): boolean {
       return window.location.href.indexOf("#access_token") !== -1 || window.location.href.indexOf("#id_token") !== -1;
+    };
+
+    private setupLoginTokenRefreshTimer(): void {
+        // Get expiration of login token
+        let exp = this.context._getItem(this.context.CONSTANTS.STORAGE.EXPIRATION_KEY + <any>this.context.config.loginResource);
+
+        // Either wait until the refresh window is valid or refresh in 1 second (measured in seconds)
+        let timerDelay = exp - this.now() - (this.context.config.expireOffsetSeconds || 300) > 0 ? exp - this.now() - (this.context.config.expireOffsetSeconds || 300) : 1;
+        if (this.loginRefreshTimer) this.loginRefreshTimer.unsubscribe();
+        this.loginRefreshTimer = timer(timerDelay * 1000).subscribe((x) => {
+            this.refreshLoginToken()
+        });
+
     }
 }
