@@ -79,7 +79,7 @@ export class AdalService {
         this.context.logOut();
     }
 
-    public handleWindowCallback(): void {
+    public handleWindowCallback(removeHash: boolean = true): void {
         const hash = window.location.hash;
         if (this.context.isCallback(hash)) {
             const requestInfo = this.context.getRequestInfo(hash);
@@ -111,11 +111,13 @@ export class AdalService {
         }
 
         // Remove hash from url
-        if (window.location.hash) {
-            if (window.history.replaceState) {
-                window.history.replaceState('', '/', window.location.pathname)
-            } else {
-                window.location.hash = '';
+        if (removeHash) {
+            if (window.location.hash) {
+                if (window.history.replaceState) {
+                    window.history.replaceState('', '/', window.location.pathname)
+                } else {
+                    window.location.hash = '';
+                }
             }
         }
     }
