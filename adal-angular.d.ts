@@ -220,8 +220,9 @@ declare namespace adal {
          * Handles redirection after login operation. 
          * Gets access token from url and saves token to the (local/session) storage
          * or saves error in case unsuccessful login.
+         * @param {boolean} removeHash - Set to false if you use HashLocationStrategy to retain URL after refresh
          */
-        handleWindowCallback(): void;
+        handleWindowCallback(removeHash: boolean): void;
 
         log(level: number, message: string, error: any): void;
         error(message: string, error: any): void;
