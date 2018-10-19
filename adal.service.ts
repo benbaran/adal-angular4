@@ -44,6 +44,11 @@ export class AdalService {
 
         // create instance with given config
         this.context = lib.inject(configOptions);
+        
+        // to keep sync with patent context if we are in in iframe 
+        if (window.parent && (window as any).parent._adalInstance) {
+          this.context = (window as any).parent._adalInstance;
+        }
 
         window.AuthenticationContext = this.context.constructor;
 
