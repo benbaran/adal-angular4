@@ -33,7 +33,7 @@ ___
 - Added HTTP Interceptor for Angular 4.3.0+
 - Updated all packages to newest versions
 
-### Buitd Instructions
+### Build Instructions
 
 -- git clone <https://github.com/benbaran/adal-angular4.git>
 
