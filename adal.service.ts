@@ -1,6 +1,6 @@
 /// <reference path="adal-angular.d.ts" />
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import { Observable, bindCallback, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class AdalService {
         loginCached: false
     };
 
-    constructor() { }
+    constructor(private ngZone: NgZone) { }
 
     public init(configOptions: adal.Config): void {
         if (!configOptions) {
@@ -240,9 +240,11 @@ export class AdalService {
         // Either wait until the refresh window is valid or refresh in 1 second (measured in seconds)
         let timerDelay = exp - this.now() - (this.context.config.expireOffsetSeconds || 300) > 0 ? exp - this.now() - (this.context.config.expireOffsetSeconds || 300) : 1;
         if (this.loginRefreshTimer) this.loginRefreshTimer.unsubscribe();
-        this.loginRefreshTimer = timer(timerDelay * 1000).subscribe((x) => {
-            this.refreshLoginToken()
-        });
 
+        this.ngZone.runOutsideAngular(() => {
+            this.loginRefreshTimer = timer(timerDelay * 1000).subscribe((x) => {
+                this.refreshLoginToken()
+            });
+        });
     }
 }
