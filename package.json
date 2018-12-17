@@ -42,6 +42,6 @@
     "zone.js": "~0.8.26"
   },
   "dependencies": {
-    "adal-angular": "=1.0.15"
+    "adal-angular": "^1.0.17"
   }
 }

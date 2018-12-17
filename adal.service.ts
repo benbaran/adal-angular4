@@ -44,11 +44,7 @@ export class AdalService {
 
         // create instance with given config
         this.context = lib.inject(configOptions);
-
-        window.AuthenticationContext = this.context.constructor;
-
-        // loginresource is used to set authenticated status
-
+        
         this.updateDataFromCache();
 
         if (this.user.loginCached && !this.user.authenticated && window.self == window.top && !this.isInCallbackRedirectMode) {
@@ -82,27 +78,37 @@ export class AdalService {
     public handleWindowCallback(removeHash: boolean = true): void {
         const hash = window.location.hash;
         if (this.context.isCallback(hash)) {
+            var isPopup = false;
+
+            if (this.context._openedWindows.length > 0 && this.context._openedWindows[this.context._openedWindows.length - 1].opener && this.context._openedWindows[this.context._openedWindows.length - 1].opener._adalInstance) {
+                this.context = this.context._openedWindows[this.context._openedWindows.length - 1].opener._adalInstance;
+                isPopup = true;
+            }
+            else if (window.parent && window.parent._adalInstance) {
+                this.context = window.parent._adalInstance;
+            }
+
             const requestInfo = this.context.getRequestInfo(hash);
             this.context.saveTokenFromHash(requestInfo);
+            var callback = this.context._callBackMappedToRenewStates[requestInfo.stateResponse] || this.context.callback;
+
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
                 this.updateDataFromCache();
                 this.setupLoginTokenRefreshTimer();
-            } else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
-                this.context.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
-            }
+            } 
 
             if (requestInfo.stateMatch) {
-                if (typeof this.context.callback === 'function') {
+                if (typeof callback === 'function') {
                     if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
                         // Idtoken or Accestoken can be renewed
                         if (requestInfo.parameters['access_token']) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
+                            callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
                                 , requestInfo.parameters['access_token']);
                         } else if (requestInfo.parameters['id_token']) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
+                            callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION)
                                 , requestInfo.parameters['id_token']);
                         } else if (requestInfo.parameters['error']) {
-                            this.context.callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
+                            callback(this.context._getItem(this.context.CONSTANTS.STORAGE.ERROR_DESCRIPTION), null);
                             this.context._renewFailed = true;
                         }
                     }

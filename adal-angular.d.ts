@@ -120,6 +120,10 @@ declare namespace adal {
 
         _renewFailed: any;
 
+        _openedWindows: any;
+
+        _callBackMappedToRenewStates: any;
+
         // Original ADAL Types
         instance: string;
         config: Config;
@@ -239,6 +243,5 @@ declare namespace adal {
  * @interface Window
  */
 interface Window {
-    AuthenticationContext: any;
-    callBackMappedToRenewStates: any;
+    _adalInstance: adal.AuthenticationContext;
 }
