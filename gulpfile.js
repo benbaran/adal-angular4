@@ -101,8 +101,11 @@ function git_push(cb) {
 }
 
 function npm_publish(cb) {
-    // body omitted
-    cb();
+    exec('npm publish ./dist', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 }
 
 exports.build = series(clean, compile, package, copy, replace_d);
@@ -111,55 +114,13 @@ exports.commit = series(clean, compile, package, copy, replace_d, bump_version, 
 
 exports.publish = series(clean, compile, package, copy, replace_d, bump_version, git_add, git_commit, git_push, npm_publish);
 
-/*
-// 1. delete contents of dist directory
-
-
-// 2. compile to dist directory
-// 3. include package.json file in ./dist folder
-// 4. include type definition file for adal-angular
-// 5. rewrite type definition file path for adal-angular in adal.service.d.ts
-// 6. increase the version in package.json
-// 7. git add
-
-// 8. git commit
-gulp.task('git-commit', function (done) {
-    var package = require('./package.json');
-    exec('git commit -m "Version ' + package.version + ' release."', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-    });
-    done();
-});
-
-// 9. git push
-gulp.task('git-push', function (done) {
-    exec('git push', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-    });
-    done();
-});
-
-// publish ./dist directory to npm
-gulp.task('publish', gulp.series(
-    [
-        'clean',
-        'compile',
-        'package',
-        'copy',
-        'replace',
-        'bump',
-        'git-add',
-        'git-commit',
-        'git-push'
-    ], function (done) {
-        exec('npm publish ./dist', function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-            cb(err);
-        });
-        done();
-    }));
-
-*/
+// 1.  delete contents of dist directory
+// 2.  compile to dist directory
+// 3.  include package.json file in ./dist folder
+// 4.  include type definition file for adal-angular
+// 5.  rewrite type definition file path for adal-angular in adal.service.d.ts
+// 6.  increase the version in package.json
+// 7.  git add
+// 8.  git commit
+// 9.  git push
+// 10. publish ./dist directory to npm
