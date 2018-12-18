@@ -93,8 +93,11 @@ function git_commit(cb) {
 }
 
 function git_push(cb) {
-    // body omitted
-    cb();
+    exec('git push', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 }
 
 function npm_publish(cb) {
@@ -113,40 +116,11 @@ exports.publish = series(clean, compile, package, copy, replace_d, bump_version,
 
 
 // 2. compile to dist directory
-
-
 // 3. include package.json file in ./dist folder
-g
 // 4. include type definition file for adal-angular
-
 // 5. rewrite type definition file path for adal-angular in adal.service.d.ts
-gulp.task('replace', function (done) {
-    gulp.src('./dist/adal.service.d.ts')
-        .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
-        .pipe(gulp.dest('./dist/'));
-        done();
-
-
-});
-
 // 6. increase the version in package.json
-gulp.task('bump', function (done) {
-    gulp.src('./package.json')
-        .pipe(bump({
-            type: 'patch'
-        }))
-        .pipe(gulp.dest('./'));
-    done();
-});
-
 // 7. git add
-gulp.task('git-add', function (done) {
-    exec('git add -A', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-    });
-    done();
-});
 
 // 8. git commit
 gulp.task('git-commit', function (done) {
