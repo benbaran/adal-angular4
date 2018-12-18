@@ -52,7 +52,7 @@ gulp publish  - publish new npm version (for maintainers only)
 ```
 git clone https://github.com/benbaran/adal-angular4.git
 
-npm install -g @angular/cli@latest
+npm install -g @angular/cli@latest gulp@latest
 
 del .\package-lock.json
 
@@ -60,5 +60,21 @@ ng update --all --force
 
 npm install typescript@3.1.1
 
-npm run build
+gulp build
 ```
+
+### NPM Publish Instructions (For Maintainers Only)
+```
+git clone https://github.com/benbaran/adal-angular4.git
+
+npm install -g @angular/cli@latest gulp@latest
+
+del .\package-lock.json
+
+ng update --all --force
+
+npm install typescript@3.1.1
+
+gulp publish
+```
+
