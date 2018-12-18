@@ -8,6 +8,10 @@ ___
 
 ## Change Log
 
+### 4.0.1
+
+- Updated to support latest version of adal-angular. Major version updated because of potentially breaking changes.
+
 ### 3.0.7
 
 - Added an automatic login token refresh feature. It will refresh tokens at application load if there is a valid sign-in token. It will also refresh the login token 5 minutes before it expires.
@@ -43,7 +47,7 @@ ___
 
 -- ng update --all --force
 
--- npm install typescript@2.7.2
+-- npm install typescript@3.1.1
 
 -- npm install adal-angular@1.0.15
 
