@@ -1,3 +1,5 @@
+const { series } = require('gulp');
+
 var
     bump = require('gulp-bump'),
     del = require('del'),
@@ -7,31 +9,13 @@ var
     watch = require('gulp-watch'),
     fs = require('fs');
 
-
-/*
-// build ./dist folder
-gulp.task('default', gulp.series(
-[
-    'clean',
-    'compile',
-    'package',
-    'replace'
-], function () { }));
-
-// watch for changes and rebuild ./dist folder
-gulp.task('watch', gulp.series('default', function (done) {
-return watch('*', function () {
-    gulp.start('default');
-});
-}));
-*/
-const { series } = require('gulp');
-
+// 1.  delete contents of dist directory
 function clean(cb) {
     del(['./dist/*', '!dist/index.js']);
     cb();
 }
 
+// 2.  compile to dist directory
 function compile(cb) {
     exec('npm run compile', function (err, stdout, stderr) {
         console.log(stdout);
@@ -40,7 +24,7 @@ function compile(cb) {
     })
 }
 
-
+// 3.  include package.json file in ./dist folder
 function package(cb) {
     const pkgjson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
     delete pkgjson.scripts;
@@ -51,30 +35,34 @@ function package(cb) {
     cb();
 }
 
+// 4.  include type definition file for adal-angular
 function copy(cb) {
     gulp.src(['adal-angular.d.ts']).pipe(gulp.dest('./dist/'));
     console.log('adal-angular.d.ts Copied to Dist Directory');
     cb();
 }
 
+// 5.  rewrite type definition file path for adal-angular in adal.service.d.ts
 function replace_d(cb) {
     gulp.src('./dist/adal.service.d.ts')
-    .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
-    .pipe(gulp.dest('./dist/'));
+        .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
+        .pipe(gulp.dest('./dist/'));
     console.log('adal.service.d.ts Path Updated');
     cb();
 }
 
+// 6.  increase the version in package.json
 function bump_version(cb) {
     gulp.src('./package.json')
-    .pipe(bump({
-        type: 'patch'
-    }))
-    .pipe(gulp.dest('./'));
+        .pipe(bump({
+            type: 'patch'
+        }))
+        .pipe(gulp.dest('./'));
     console.log('Version Bumped');
     cb();
 }
 
+// 7.  git add
 function git_add(cb) {
     exec('git add -A', function (err, stdout, stderr) {
         console.log(stdout);
@@ -83,6 +71,7 @@ function git_add(cb) {
     });
 }
 
+// 8.  git commit
 function git_commit(cb) {
     var package = require('./package.json');
     exec('git commit -m "Version ' + package.version + ' release."', function (err, stdout, stderr) {
@@ -92,6 +81,7 @@ function git_commit(cb) {
     });
 }
 
+// 9.  git push
 function git_push(cb) {
     exec('git push', function (err, stdout, stderr) {
         console.log(stdout);
@@ -100,6 +90,8 @@ function git_push(cb) {
     });
 }
 
+
+// 10. publish ./dist directory to npm
 function npm_publish(cb) {
     exec('npm publish ./dist', function (err, stdout, stderr) {
         console.log(stdout);
@@ -108,19 +100,11 @@ function npm_publish(cb) {
     });
 }
 
+// Gulp Tasks
 exports.build = series(clean, compile, package, copy, replace_d);
 
 exports.commit = series(clean, compile, package, copy, replace_d, bump_version, git_add, git_commit, git_push);
 
 exports.publish = series(clean, compile, package, copy, replace_d, bump_version, git_add, git_commit, git_push, npm_publish);
 
-// 1.  delete contents of dist directory
-// 2.  compile to dist directory
-// 3.  include package.json file in ./dist folder
-// 4.  include type definition file for adal-angular
-// 5.  rewrite type definition file path for adal-angular in adal.service.d.ts
-// 6.  increase the version in package.json
-// 7.  git add
-// 8.  git commit
-// 9.  git push
-// 10. publish ./dist directory to npm
+
