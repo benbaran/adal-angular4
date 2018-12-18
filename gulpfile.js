@@ -59,7 +59,7 @@ gulp.task('copy', function (done) {
 
 // 5. rewrite type definition file path for adal-angular in adal.service.d.ts
 gulp.task('replace', function (done) {
-    gulp.src('./dist/adal.service.d.ts')
+    gulp.src('./dist/adal.service.d.ts', { allowEmpty: true })
         .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
         .pipe(gulp.dest('./dist/'));
 
