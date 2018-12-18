@@ -12,10 +12,10 @@ ___
 
 - Upgraded to Gulp version 4. Build options are now:
 
-.. * gulp watch - watch for file changes do the build task
-.. * gulp build - clean the dist directory and build the project
-.. * gulp commit - bump version and add and commit files to git (for maintainers only)
-.. * gulp publish - publish new npm version (for mantainers only)
+* gulp watch - watch for file changes do the build task
+* gulp build - clean the dist directory and build the project
+* gulp commit - bump version and add and commit files to git (for maintainers only)
+* gulp publish - publish new npm version (for mantainers only)
 
 ### 4.0.1
 
@@ -58,6 +58,4 @@ ___
 
 -- npm install typescript@3.1.1
 
--- npm install adal-angular@1.0.15
-
--- npm run compile
+-- npm run build
