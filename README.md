@@ -16,7 +16,7 @@ ___
 gulp watch    - watch for file changes do the build task
 gulp build    - clean the dist directory and build the project
 gulp commit   - bump version and add and commit files to git (for maintainers only)
-gulp publish  - publish new npm version (for mantainers only)
+gulp publish  - publish new npm version (for maintainers only)
 ```
 ### 4.0.1
 
