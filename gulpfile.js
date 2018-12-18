@@ -59,7 +59,7 @@ gulp.task('copy', function (done) {
 
 // 5. rewrite type definition file path for adal-angular in adal.service.d.ts
 gulp.task('replace', function (done) {
-    gulp.src('./dist/adal.service.d.ts', { allowEmpty: true })
+    gulp.src('./dist/adal.service.d.ts')
         .pipe(replace('../adal-angular.d.ts', './adal-angular.d.ts'))
         .pipe(gulp.dest('./dist/'));
 
@@ -110,17 +110,18 @@ gulp.task('publish', gulp.series(
         'clean',
         'compile',
         'package',
+        'copy',
         'replace',
         'bump',
         'git-add',
         'git-commit',
         'git-push'
     ], function (done) {
-        //exec('npm publish ./dist', function (err, stdout, stderr) {
-        //    console.log(stdout);
-        //    console.log(stderr);
-        //    cb(err);
-        //});
+        exec('npm publish ./dist', function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            cb(err);
+        });
         done();
     }));
 
