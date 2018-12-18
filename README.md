@@ -8,6 +8,15 @@ ___
 
 ## Change Log
 
+### 4.0.9
+
+- Upgraded to Gulp version 4. Build options are now:
+
+.. * gulp watch - watch for file changes do the build task
+.. * gulp build - clean the dist directory and build the project
+.. * gulp commit - bump version and add and commit files to git (for maintainers only)
+.. * gulp publish - publish new npm version (for mantainers only)
+
 ### 4.0.1
 
 - Updated to support latest version of adal-angular. Major version updated because of potentially breaking changes.

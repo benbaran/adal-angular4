@@ -9,6 +9,11 @@ var
     watch = require('gulp-watch'),
     fs = require('fs');
 
+// watch for changes files and recompile
+function watch_files() {
+    gulp.watch("*", gulp.series(clean, compile));
+}
+
 // 1.  delete contents of dist directory
 function clean(cb) {
     del(['./dist/*', '!dist/index.js']);
@@ -101,10 +106,13 @@ function npm_publish(cb) {
 }
 
 // Gulp Tasks
+
+exports.watch = series(watch_files);
+
 exports.build = series(clean, compile, package, copy, replace_d);
 
 exports.commit = series(clean, compile, package, copy, replace_d, bump_version, git_add, git_commit, git_push);
 
 exports.publish = series(clean, compile, package, copy, replace_d, bump_version, git_add, git_commit, git_push, npm_publish);
 
-
+ 
