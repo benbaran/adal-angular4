@@ -1,4 +1,6 @@
-# adal-angular4 [![Build status](https://ci.appveyor.com/api/projects/status/iwpwhyp6ymifxc4e?svg=true)](https://ci.appveyor.com/project/benbaran/adal-angular4)
+# adal-angular4 
+[![Build status](https://ci.appveyor.com/api/projects/status/iwpwhyp6ymifxc4e?svg=true)](https://ci.appveyor.com/project/benbaran/adal-angular4)
+[![npm version](https://badge.fury.io/js/adal-angular4.svg)](https://badge.fury.io/js/adal-angular4)
 
 
 ___
