@@ -37,6 +37,7 @@ declare namespace adal {
         extraQueryParameter?: string;
         navigateToLoginRequestUrl?: boolean;
         logOutUri?: string;
+        loadFrameTimeout?: number;
     }
 
     /**
