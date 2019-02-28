@@ -44,6 +44,10 @@ function package(cb) {
 function copy(cb) {
     gulp.src(['adal-angular.d.ts']).pipe(gulp.dest('./dist/'));
     console.log('adal-angular.d.ts Copied to Dist Directory');
+
+    gulp.src(['README.md']).pipe(gulp.dest('./dist/'));
+    console.log('README.md Copied to Dist Directory');
+
     cb();
 }
 
