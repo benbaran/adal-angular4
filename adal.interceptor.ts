@@ -12,10 +12,12 @@ export class AdalInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        // if the endpoint is not registered then pass
-        // the request as it is to the next handler
+        // if the endpoint is not registered 
+        // or if the header 'skip-adal' is set
+        // then pass the request as it is to the next handler
         const resource = this.adal.getResourceForEndpoint(request.url);
-        if (!resource) {
+        const skipAdal = request.headers.get('skip-adal');
+        if (!resource || skipAdal) {
             return next.handle(request);
         }
 
