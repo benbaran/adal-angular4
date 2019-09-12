@@ -80,3 +80,139 @@ npm install typescript@3.1.1
 gulp publish
 ```
 
+### Usage ( tested with Angular 8)
+
+First install the package ( ex using npm )
+```
+npm i adal-angular4
+```
+
+Implement ADAL authentication:
+
+## app.module.ts
+Open your Angular root module, usually app.module.ts
+Add the following import
+
+```Javascript
+/*Authentication*/
+import { AdalService, AdalGuard, AdalInterceptor } from 'adal-angular4';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+```
+
+Update your @NgModule providers section with the following line:
+```JSON
+providers: [AdalService, AdalGuard, {provide: HTTP_INTERCEPTORS, useClass: AdalInterceptor, multi: true }
+```
+
+It should look something like this:
+```Javascript
+@NgModule({
+  declarations: [
+    AppComponent,
+    ...
+  ],
+  imports: [
+    ...
+  ],
+  providers: [AdalService, AdalGuard, {provide: HTTP_INTERCEPTORS, useClass: AdalInterceptor, multi: true }, ... ],
+  bootstrap: [AppComponent]
+})
+```
+## environment.ts
+inside your environment.ts file add your config, this file is created for you when u use the Angular CLI
+
+Usually can be found here:
+src
+    ├── environements
+        └── environment.ts
+        └── environment.prod.ts
+
+
+```Javascript
+export const environment = {
+  production: false,
+  config: {
+    tenant: 'tenant.onmicrosoft.com',
+    clientId: 'app registration id',
+    endpoints: {
+      'http://localhost:4200/': 'the id'
+    }
+  }
+};
+```
+## app.component.ts
+Then import the following into your root component usually app.component.ts
+
+```Javascript
+import { environment } from '../environments/environment';
+import { AdalService } from 'adal-angular4';
+```
+
+Init the adal lib by adding the following lines to your constructor or OnInit
+
+```Javascript
+export class AppComponent implements {
+    constructor(private adalService: AdalService) {
+        this.adalService.init(environment.config);
+        this.adalService.handleWindowCallback();
+    }
+}
+```
+
+## app-routing.module.ts
+You can protect routes by adding the authguard to you route
+
+import the following inside your routing module file usually app-routing.module.ts
+```Javascript
+import { AdalGuard } from 'adal-angular4';
+```
+
+
+ex: 
+```Javascript
+const routes: Routes = [
+  {
+    path: '',
+    component: YourComponent,
+    canActivate: [AdalGuard]
+  }
+];
+```
+
+## Login / Logout
+You can call the login and logout function with the following code.
+
+AdalService needs to be imported in your file
+```Javascript
+import { AdalService } from 'adal-angular4';
+/*Dont forget to initialize*/
+constructor(private adalService: AdalService)
+```
+
+**Login:**
+```Javascript
+this.adalService.login();
+```
+
+**Logout:**
+```Javascript
+this.adalService.logOut();
+```
+
+### Check if user is allready authenticated, if not login
+Checking if user has allready logged in if not do something
+
+AdalService needs to be imported in your file
+```Javascript
+import { AdalService } from 'adal-angular4';
+/*Dont forget to initialize*/
+constructor(private adalService: AdalService)
+```
+
+```Javascript
+if (this.adalService.userInfo.authenticated) {
+    /*All good*/
+} else {
+    /*No good*/
+}
+```
