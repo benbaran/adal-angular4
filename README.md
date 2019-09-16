@@ -216,3 +216,69 @@ if (this.adalService.userInfo.authenticated) {
     /*No good*/
 }
 ```
+
+### Using Azure AD Role based Authentication
+This section is optional, the library works without these settings aswell.
+
+Setup for Role based authentication in your Angular application:
+
+## Steps to do in Azure
+Go to you app registration, the same one you used the clientId from inside your environments file.
+And add your custom roles inside the app manifest:
+
+```Javascript
+"appRoles": [
+    {
+      "allowedMemberTypes": [
+        "User"
+      ],
+      "description": "your user description",
+      "displayName": "UserRole",
+      "id": "generate a unique guid",
+      "isEnabled": true,
+      "value": "UserRole"
+    },
+    {
+      "allowedMemberTypes": [
+        "User"
+      ],
+      "description": "your admin description",
+      "displayName": "AdminRole",
+      "id": "generate a unique guid",
+      "isEnabled": true,
+      "value": "AdminRole"
+    }
+  ]
+```
+
+Once these roles have been created you can assign them to users:
+
+Open the registration for local directory, this can be found on the overview page on the right side 'Managed application in local directory: -your app registration name-'
+On this page go to 'Users and groups' and click 'Add user'
+
+Now add the user that needs to be able to access the application and assign a role to the user.
+
+The last step in Azure is activating the User assignment required property in the 'Properties' tab.
+When you enable this option only users that are assigned a role can login to the application.
+
+## Steps in Angular
+In order to protect a certain route to be accessed only by authenticated users with a certain role:
+Update the 
+## app-routing.module.ts
+with the following data attribute
+
+
+```Javascript
+const routes: Routes = [
+  {
+    path: '',
+    component: YourComponent,
+    canActivate: [AdalGuard],
+    data: { expectedRole: 'AdminRole' }
+  }
+];
+```
+expectedRole can be any of the custom Roles you created in App manifest (appRoles) for your app registration in Azure.
+
+
+
