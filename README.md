@@ -217,12 +217,12 @@ if (this.adalService.userInfo.authenticated) {
 }
 ```
 
-### Using Azure AD Role based Authentication
+## Using Azure AD Role based Authentication
 This section is optional, the library works without these settings aswell.
 
 Setup for Role based authentication in your Angular application:
 
-## Steps to do in Azure
+### Steps to do in Azure
 Go to you app registration, the same one you used the clientId from inside your environments file.
 And add your custom roles inside the app manifest:
 
@@ -261,10 +261,10 @@ Now add the user that needs to be able to access the application and assign a ro
 The last step in Azure is activating the User assignment required property in the 'Properties' tab.
 When you enable this option only users that are assigned a role can login to the application.
 
-## Steps in Angular
+### Steps in Angular
 In order to protect a certain route to be accessed only by authenticated users with a certain role:
 Update the 
-## app-routing.module.ts
+#### app-routing.module.ts
 with the following data attribute
 
 
