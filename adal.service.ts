@@ -83,9 +83,14 @@ export class AdalService {
             if (this.context._openedWindows.length > 0 && this.context._openedWindows[this.context._openedWindows.length - 1].opener && this.context._openedWindows[this.context._openedWindows.length - 1].opener._adalInstance) {
                 this.context = this.context._openedWindows[this.context._openedWindows.length - 1].opener._adalInstance;
                 isPopup = true;
-            }
-            else if (window.parent && window.parent._adalInstance) {
-                this.context = window.parent._adalInstance;
+            } else {
+                try {
+                    if (window.parent && window.parent._adalInstance) {
+                        this.context = window.parent._adalInstance;
+                    }
+                } catch {
+                    // ignore any exceptions and resort to default context.
+                }
             }
 
             const requestInfo = this.context.getRequestInfo(hash);
