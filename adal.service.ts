@@ -184,7 +184,9 @@ export class AdalService {
     }
 
     public getResourceForEndpoint(url: string): string | null {
-        return this.context.getResourceForEndpoint(url);
+        return this.context
+            ? null 
+            : this.context.getResourceForEndpoint(url);
     }
 
 
