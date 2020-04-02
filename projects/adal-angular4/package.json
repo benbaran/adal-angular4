@@ -1,0 +1,25 @@
+{
+  "name": "adal-angular4",
+  "version": "9.0.0",
+  "description": "Angular 4+ ADAL Wrapper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benbaran/adal-angular4.git"
+  },
+  "keywords": [
+    "ADAL",
+    "Angular"
+  ],
+  "author": "Ben Baran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benbaran/adal-angular4/issues"
+  },
+  "homepage": "https://github.com/benbaran/adal-angular4#readme",
+  "peerDependencies": {
+    "@angular/common": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "adal-angular": "^1.0.17",
+    "tslib": "^1.10.0"
+  }
+}
