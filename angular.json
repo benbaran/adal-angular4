@@ -64,6 +64,7 @@
               "projects/adal-angular4-demo/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/adal-angular4-demo/src/styles.css"
             ],
             "scripts": []
@@ -128,6 +129,7 @@
               "projects/adal-angular4-demo/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/adal-angular4-demo/src/styles.css"
             ],
             "scripts": []
@@ -159,6 +161,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "adal-angular4"
 }

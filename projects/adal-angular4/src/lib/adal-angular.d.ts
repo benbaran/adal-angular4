@@ -2,10 +2,6 @@
 // Typings needed for using ADAL with Angular 4
 declare module 'adal-angular' {
     export function inject(config: adal.Config): adal.AuthenticationContext;
-
-    export class adal {
-
-    }
 }
 
 declare var AuthenticationContext: adal.AuthenticationContextStatic;

@@ -12,26 +12,30 @@ import { mergeMap } from 'rxjs/operators';
 @Injectable()
 export class AdalInterceptor implements HttpInterceptor {
 
-  constructor(private adal: AdalService) { }
+  constructor(private service: AdalService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     // if the endpoint is not registered
     // or if the header 'skip-adal' is set
     // then pass the request as it is to the next handler
-    const resource = this.adal.getResourceForEndpoint(request.url);
+    const resource = this.service.getResourceForEndpoint(request.url);
+
     const skipAdal = request.headers.get('skip-adal');
+
     if (!resource || skipAdal) {
+
       return next.handle(request);
     }
 
     // if the user is not authenticated then drop the request
-    if (!this.adal.userInfo.authenticated) {
+    if (!this.service.userInfo.authenticated) {
+
       throw new Error('Cannot send request to registered endpoint if the user is not authenticated.');
     }
 
     // if the endpoint is registered then acquire and inject token
-    return this.adal.acquireToken(resource)
+    return this.service.acquireToken(resource)
       .pipe(
         mergeMap((token: string) => {
           // clone the request and replace the original headers with
@@ -43,6 +47,6 @@ export class AdalInterceptor implements HttpInterceptor {
           return next.handle(authorizedRequest);
         }
         )
-      )
+      );
   }
 }

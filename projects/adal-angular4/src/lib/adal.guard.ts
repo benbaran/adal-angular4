@@ -8,12 +8,12 @@ import { AdalService } from './adal.service';
 })
 export class AdalGuard implements CanActivate {
 
-  constructor(private adalService: AdalService) { }
+  constructor(private service: AdalService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.adalService.userInfo.authenticated;
+    return this.service.userInfo.authenticated;
   }
 }
