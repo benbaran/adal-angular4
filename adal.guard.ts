@@ -12,7 +12,15 @@ export class AdalGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.adalService.userInfo.authenticated;
+
+    const expectedRole = route.data.expectedRole;
+
+    if(expectedRole){
+      return (this.adalService.userInfo.authenticated && this.adalService.userInfo.profile.roles.includes(expectedRole));
+    } else {
+      return this.adalService.userInfo.authenticated;
+    }
+    
   }
 
     public canActivateChild(
