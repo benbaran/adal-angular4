@@ -95,7 +95,9 @@ export class AdalService {
             if (requestInfo.requestType === this.context.REQUEST_TYPE.LOGIN) {
                 this.updateDataFromCache();
                 this.setupLoginTokenRefreshTimer();
-            } 
+            } else if (requestInfo.requestType === this.context.REQUEST_TYPE.RENEW_TOKEN) {
+                this.updateDataFromCache();
+            }
 
             if (requestInfo.stateMatch) {
                 if (typeof callback === 'function') {
